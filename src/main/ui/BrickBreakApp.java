@@ -119,23 +119,26 @@ public class BrickBreakApp {
                 .showDialog(endGui);
     }
 
+    @SuppressWarnings({"checkstyle:AvoidEscapedUnicodeCharacters", "checkstyle:SuppressWarnings"})
     private void drawBall() {
         Ball ball = game.getBall();
 
-        drawPosition(ball.getX(), ball.getY(), TextColor.ANSI.RED, "⬤", false);
+        drawPosition(ball.getX(), ball.getY(), TextColor.ANSI.RED, '\u2B24', false);
     }
 
+    @SuppressWarnings({"checkstyle:AvoidEscapedUnicodeCharacters", "checkstyle:SuppressWarnings"})
     private void drawPaddle() {
         Paddle paddle = game.getPaddle();
 
-        drawPosition(paddle.getX(), paddle.getyPos(), TextColor.ANSI.BLUE, "█", true);
+        drawPosition(paddle.getX(), paddle.getyPos(), TextColor.ANSI.BLUE, '\u2588', true);
     }
 
+    @SuppressWarnings({"checkstyle:AvoidEscapedUnicodeCharacters", "checkstyle:SuppressWarnings"})
     private void drawBricks() {
         ArrayList<Brick> bricks = game.getBricks();
 
         for (Brick b : bricks) {
-            drawPosition(b.getX(), b.getY(), TextColor.ANSI.YELLOW, "█", true);
+            drawPosition(b.getX(), b.getY(), TextColor.ANSI.YELLOW, '\u2610', true);
         }
     }
 
@@ -143,13 +146,13 @@ public class BrickBreakApp {
      * Draws a character in a given position on the terminal.
      * If wide, it will draw the character twice to make it appear wide.
      */
-    private void drawPosition(int x, int y, TextColor color, String c, boolean wide) {
+    private void drawPosition(int x, int y, TextColor color, char c, boolean wide) {
         TextGraphics text = screen.newTextGraphics();
         text.setForegroundColor(color);
-        text.putString(x * 2, y + 1, c);
+        text.putString(x * 2, y + 1, String.valueOf(c));
 
         if (wide) {
-            text.putString(x * 2 + 1, y + 1, c);
+            text.putString(x * 2 + 1, y + 1, String.valueOf(c));
         }
     }
 }
