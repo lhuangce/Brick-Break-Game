@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/*
+/**
  * Unit tests for Paddle class
  */
 public class TestPaddle {

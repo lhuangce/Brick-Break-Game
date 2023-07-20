@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import static java.lang.Math.abs;
 import static org.junit.jupiter.api.Assertions.*;
 
-/*
+/**
  * Unit tests for BrickBreakGame class
  */
 public class TestGame {

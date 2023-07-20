@@ -1,6 +1,6 @@
 package model;
 
-/*
+/**
  * Represents the paddle.
  */
 public class Paddle {

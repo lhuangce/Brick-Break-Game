@@ -1,6 +1,6 @@
 package model;
 
-/*
+/**
  * Represents a brick.
  */
 public class Brick {

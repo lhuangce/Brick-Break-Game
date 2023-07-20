@@ -2,13 +2,13 @@ package model;
 
 import java.awt.*;
 
-/*
+/**
  * Represents a ball; code based on PaddleBall lab example
  */
 
 public class Ball {
     protected static int SIZE = 20;
-    public static final Color COLOR = new Color(255, 150, 28);
+    //public static final Color COLOR = new Color(255, 150, 28);
 
     private int xcoord;
     private int ycoord;

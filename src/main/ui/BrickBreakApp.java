@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import static com.googlecode.lanterna.gui2.dialogs.TextInputDialog.showNumberDialog;
 
 /**
- * Begins the game (based on TerminalGame from SnakeConsole-Lanterna tutorial
+ * Begins the game (based on TerminalGame from SnakeConsole-Lanterna tutorial)
  */
 public class BrickBreakApp {
     private BrickBreakGame game;
@@ -38,7 +38,7 @@ public class BrickBreakApp {
     public void start() throws IOException, InterruptedException {
         screen = new DefaultTerminalFactory().createScreen();
         screen.startScreen();
-        TerminalSize terminalSize = screen.getTerminalSize();
+        //TerminalSize terminalSize = screen.getTerminalSize();
 
         game = new BrickBreakGame(setBricks());
 
