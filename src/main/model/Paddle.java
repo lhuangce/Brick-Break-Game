@@ -32,4 +32,8 @@ public class Paddle {
     public int getX() {
         return xcoord;
     }
+
+    public int getyPos() {
+        return Y_POS;
+    }
 }

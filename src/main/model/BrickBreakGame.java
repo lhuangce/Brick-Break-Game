@@ -4,10 +4,11 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
-/*
+/**
  * Represents the state of a brick break game.
  */
 public class BrickBreakGame {
+    public static final long TICKS_PER_SECOND = 10;
     protected static int WIDTH = 800;
     protected static int HEIGHT = 600;
     protected static int Y0 = BrickBreakGame.HEIGHT - 6 * Ball.SIZE;
