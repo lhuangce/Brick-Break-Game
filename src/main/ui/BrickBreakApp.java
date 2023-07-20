@@ -119,26 +119,23 @@ public class BrickBreakApp {
                 .showDialog(endGui);
     }
 
-    @SuppressWarnings({"checkstyle:AvoidEscapedUnicodeCharacters", "checkstyle:SuppressWarnings"})
     private void drawBall() {
         Ball ball = game.getBall();
 
-        drawPosition(ball.getX(), ball.getY(), TextColor.ANSI.RED, '\u2B24', false);
+        drawPosition(ball.getX(), ball.getY(), TextColor.ANSI.RED, '⬤', false);
     }
 
-    @SuppressWarnings({"checkstyle:AvoidEscapedUnicodeCharacters", "checkstyle:SuppressWarnings"})
     private void drawPaddle() {
         Paddle paddle = game.getPaddle();
 
-        drawPosition(paddle.getX(), paddle.getyPos(), TextColor.ANSI.BLUE, '\u2588', true);
+        drawPosition(paddle.getX(), paddle.getyPos(), TextColor.ANSI.BLUE, '█', true);
     }
 
-    @SuppressWarnings({"checkstyle:AvoidEscapedUnicodeCharacters", "checkstyle:SuppressWarnings"})
     private void drawBricks() {
         ArrayList<Brick> bricks = game.getBricks();
 
         for (Brick b : bricks) {
-            drawPosition(b.getX(), b.getY(), TextColor.ANSI.YELLOW, '\u2610', true);
+            drawPosition(b.getX(), b.getY(), TextColor.ANSI.YELLOW, '☐', true);
         }
     }
 
