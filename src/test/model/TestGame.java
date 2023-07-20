@@ -118,6 +118,12 @@ public class TestGame {
         testGame.gameAction(KeyEvent.VK_SPACE);
         assertFalse(testGame.isPaused());
 
+        testGame.gameAction(KeyEvent.VK_E);
+        assertEquals(Paddle.X_POS + Paddle.STEP_SIZE, p.getX());
+
+        testGame.restart(KeyEvent.VK_R, 30);
+        assertEquals(Paddle.X_POS + Paddle.STEP_SIZE, p.getX());
+
         for (int i = 0; i < BrickBreakGame.HEIGHT; i++) {
             testGame.update();
         }
