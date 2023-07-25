@@ -1,155 +1,156 @@
 package ui;
 
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
-import com.googlecode.lanterna.gui2.WindowBasedTextGUI;
-import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
-import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import model.Ball;
-import model.Brick;
 import model.BrickBreakGame;
-import model.Paddle;
+import model.exceptions.MaxBricksException;
 
-import java.io.IOException;
-import java.math.BigInteger;
-import java.util.ArrayList;
-
-import static com.googlecode.lanterna.gui2.dialogs.TextInputDialog.showNumberDialog;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Scanner;
 
 /**
- * Begins the game (based on TerminalGame from SnakeConsole-Lanterna tutorial)
+ * Begins the game with text representations of game events (based on TellerApp from project stage 1 demo)
  */
+
 public class BrickBreakApp {
     private BrickBreakGame game;
-    private Screen screen;
-    private WindowBasedTextGUI endGui;
+    private KeyEvent input;
+    private Scanner scanner;
+    private KeyListener keyHandler;
 
-    /**
-     * Begins the game and method does not leave execution
-     * until game is complete.
-     */
-    public void start() throws IOException, InterruptedException {
-        screen = new DefaultTerminalFactory().createScreen();
-        screen.startScreen();
-        //TerminalSize terminalSize = screen.getTerminalSize();
-
-        game = new BrickBreakGame(setBricks());
-
-        beginTicks();
+    // EFFECTS: runs brick break game application
+    public BrickBreakApp() throws InterruptedException {
+        runGame();
     }
 
-    /**
-     * Sets number of bricks to start game based on user input
-     */
-    private int setBricks() throws IOException {
-        final WindowBasedTextGUI textGui = new MultiWindowTextGUI(screen);
+    // MODIFIES: this
+    // EFFECTS: processes user input during game
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    public void runGame() throws InterruptedException {
+        boolean keepGoing = true;
+        String command;
 
-        BigInteger val = showNumberDialog(textGui, "Start",
-                "Choose the starting number of bricks (0-30)", "");
-        return val.intValue();
-    }
+        init();
 
-    /**
-     * Begins the game cycle. Ticks once every BrickBreakGame.TICKS_PER_SECOND unless paused until
-     * game has ended and the endGui has been exited.
-     */
-    private void beginTicks() throws IOException, InterruptedException {
-        while (!game.gameOver() || endGui.getActiveWindow() != null) {
+        while (!game.gameOver()) {
             if (!game.isPaused()) {
-                tick();
-                Thread.sleep(1000L / BrickBreakGame.TICKS_PER_SECOND);
+                while (true) {
+                    doUpdate();
+                    if (game.isPaused()) {
+                        break;
+                    }
+                    Thread.sleep(100L);
+                }
+            } else {
+                while (game.isPaused()) {
+                    System.out.println("Press 'p' again to resume game, 'q' to quit.");
+                    command = scanner.next();
+                    command = command.toLowerCase();
+                    if (command.equals("p")) {
+                        game.gameAction(KeyEvent.VK_P);
+                    } else if (command.equals("q")) {
+                        keepGoing = false;
+                        System.exit(0);
+                    }
+                }
+            }
+        }
+        System.out.println("Game over! Press 'r' to restart or 'q' to quit");
+
+        while (keepGoing) {
+            command = scanner.next();
+            command = command.toLowerCase();
+            if (command.equals("r")) {
+                keepGoing = false;
+                break;
+            } else if (command.equals("q")) {
+                keepGoing = false;
+                System.exit(0);
+            }
+        }
+        runGame();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes scanner, input, key handler, and initial game state
+    private void init() {
+        scanner = new Scanner(System.in);
+        input = null;
+        keyHandler = new KeyHandler();
+        boolean keepGoing = true;
+        int brickCount = 0;
+
+        while (keepGoing) {
+            System.out.println("Choose the starting number of bricks (1-30):");
+            brickCount = brickEntry(scanner);
+            if (brickCount != 0) {
+                keepGoing = false;
             }
         }
 
-        System.exit(0);
+        game = new BrickBreakGame(brickCount);
+        Ball ball = game.getBall();
+
+        System.out.println("New game with " + brickCount + " bricks.");
+        System.out.println("Ball at (x = " + ball.getX() + ", y = "
+                + ball.getY() + "), moving at (dx = "
+                + ball.getDx() + ", dy = " + ball.getDy() + ").");
+        System.out.println("Paddle at (x = " + game.getPaddle().getX() + ").");
     }
 
-    /**
-     * Handles one cycle in the game by taking user input,
-     * ticking the game internally, and rendering the effects
-     */
-    private void tick() throws IOException {
-        //handleUserInput();
+    // EFFECTS: produces number of bricks to start game with based on user input
+    private int brickEntry(Scanner s) {
+        int brickCount = 0;
+        try {
+            brickCount = checkMaxBricks(s);
+        } catch (MaxBricksException e) {
+            System.out.println("Maximum number of bricks cannot exceed 30!");
+        }
+        return brickCount;
+    }
+
+    private int checkMaxBricks(Scanner s) throws MaxBricksException {
+        int brickCount = s.nextInt();
+
+        if (brickCount > 30) {
+            throw new MaxBricksException();
+        }
+        return brickCount;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates game state
+    private void doUpdate() {
+        String command;
 
         game.update();
 
-        //screen.setCursorPosition(new TerminalPosition(0, 0));
-        screen.clear();
-        render();
-        screen.refresh();
+        System.out.println("Press 'a' to move the paddle left, 'd' to move right, or 'p' to pause the game.");
 
-        //screen.setCursorPosition(new TerminalPosition(screen.getTerminalSize().getColumns() - 1, 0));
+        command = scanner.next();
+        command = command.toLowerCase();
+
+        processCommandTemp(command);
     }
 
-    /**
-     * Renders the current screen.
-     * Draws the end screen if the game has ended, otherwise
-     * draws the ball, paddle, and bricks.
-     */
-    private void render() {
-        if (game.gameOver()) {
-            if (endGui == null) {
-                drawEndScreen();
-            }
-
-            return;
-        }
-
-        drawBall();
-        drawPaddle();
-        drawBricks();
-    }
-
-    private void drawEndScreen() {
-        endGui = new MultiWindowTextGUI(screen);
-
-        new MessageDialogBuilder()
-                .setTitle("Game over!")
-                //.setText("You finished with a score of " + game.getScore() + "!")
-                //.setText("Press R to restart!")
-                .addButton(MessageDialogButton.Close)
-                .build()
-                .showDialog(endGui);
-    }
-
-    private void drawBall() {
-        Ball ball = game.getBall();
-
-        drawPosition(ball.getX(), ball.getY(), TextColor.ANSI.RED, '⬤', false);
-    }
-
-    private void drawPaddle() {
-        Paddle paddle = game.getPaddle();
-
-        drawPosition(paddle.getX(), paddle.getyPos(), TextColor.ANSI.BLUE, '█', true);
-    }
-
-    private void drawBricks() {
-        ArrayList<Brick> bricks = game.getBricks();
-
-        for (Brick b : bricks) {
-            drawPosition(b.getX(), b.getY(), TextColor.ANSI.YELLOW, '☐', true);
+    // MODIFIES: this
+    // EFFECTS: processes commands from user input (temporary)
+    private void processCommandTemp(String command) {
+        if (command.equals("a")) {
+            game.gameAction(KeyEvent.VK_A);
+        } else if (command.equals("d")) {
+            game.gameAction(KeyEvent.VK_D);
+        } else if (command.equals("p")) {
+            game.gameAction(KeyEvent.VK_P);
         }
     }
 
-    /**
-     * Draws a character in a given position on the terminal.
-     * If wide, it will draw the character twice to make it appear wide.
-     */
-    private void drawPosition(int x, int y, TextColor color, char c, boolean wide) {
-        TextGraphics text = screen.newTextGraphics();
-        text.setForegroundColor(color);
-        text.putString(x * 2, y + 1, String.valueOf(c));
-
-        if (wide) {
-            text.putString(x * 2 + 1, y + 1, String.valueOf(c));
+    private class KeyHandler extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            input = e;
+            game.gameAction(e.getKeyCode());
         }
     }
 }

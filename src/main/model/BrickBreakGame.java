@@ -23,7 +23,7 @@ public class BrickBreakGame {
     private boolean paused;
     private boolean isGameOver;
 
-    // REQUIRES: brickCount is on [0, 30]
+    // REQUIRES: brickCount is on [1, 30]
     // EFFECTS: creates new game with ball at position (random x, yStart), given number of bricks in rows of up to 10 in
     // the top half of the screen, with statuses of game not paused and game not over
     public BrickBreakGame(int brickCount) {
@@ -34,7 +34,9 @@ public class BrickBreakGame {
     // EFFECTS: updates ball, bricks, and game over status
     public void update() {
         ball.move();
-
+        System.out.println("Ball at (x = " + ball.getX() + ", y = " + ball.getY() + "), moving at (dx = "
+                  + ball.getDx() + ", dy = " + ball.getDy() + ")");
+        System.out.println("Paddle at (x = " + paddle.getX() + ", y = " + Paddle.Y_POS + ").");
         checkCollision();
         checkGameOver();
     }
@@ -52,9 +54,9 @@ public class BrickBreakGame {
         for (int count = 0; count < brickCount; count++) {
             if (count < 10) {
                 bricks.add(new Brick(XLOC_0 + Brick.SIZE_X * count, YLOC_0));
-            } else if (count >= 10 && count < 20) {
+            } else if (count < 20) {
                 bricks.add(new Brick(XLOC_0 + Brick.SIZE_X * (count - 10), YLOC_0 * 2));
-            } else if (count >= 20) {
+            } else {
                 bricks.add(new Brick(XLOC_0 + Brick.SIZE_X * (count - 20), YLOC_0 * 3));
             }
         }
@@ -65,6 +67,8 @@ public class BrickBreakGame {
     private void checkCollision() {
         if (ball.collideWithPaddle(paddle)) {
             ball.bounceOffHorizontal();
+            ball.move();
+            System.out.println("Bounced off paddle!");
         }
 
         for (int i = 0; i < bricks.size(); i++) {
@@ -72,9 +76,12 @@ public class BrickBreakGame {
             if (ball.collideWithBrickWidth(current)) {
                 ball.bounceOffHorizontal();
                 bricks.remove(current);
+                System.out.println("Bounced off brick!");
             } else if (ball.collideWithBrickHeight(current)) {
                 ball.bounceOffVertical();
                 bricks.remove(current);
+                System.out.println("Bounced off brick!");
+
             }
         }
     }
@@ -87,25 +94,23 @@ public class BrickBreakGame {
         }
     }
 
-    // MODIFIES: this
+    /*// MODIFIES: this
     // EFFECTS: resets game state on key press when game is over, number of bricks based on integer input
     public void restart(int keyCode, int brickCount) {
         if (keyCode == KeyEvent.VK_R && isGameOver) {
             setUp(brickCount);
         }
-    }
+    }*/
 
     // MODIFIES: this
     // EFFECTS: keeps current ball, paddle, and brick states when paused, resumes on key press; exits on key press
     public void gameAction(int keyCode) {
-        BrickBreakGame saveState = new BrickBreakGame(0);
-        if (keyCode == KeyEvent.VK_SPACE && !paused) {
+        if (keyCode == KeyEvent.VK_SPACE || keyCode == KeyEvent.VK_P && !paused) {
             paused = true;
-        } else if (keyCode == KeyEvent.VK_SPACE && paused) {
+            System.out.println("Game paused");
+        } else if (keyCode == KeyEvent.VK_SPACE || keyCode == KeyEvent.VK_P) {
             paused = false;
-        } else if (keyCode == KeyEvent.VK_ESCAPE) {
-            saveState = this;
-            System.exit(0);
+            System.out.println("Game resumed");
         } else {
             controlPaddle(keyCode);
         }
@@ -114,10 +119,12 @@ public class BrickBreakGame {
     // MODIFIES: this
     // EFFECTS: updates paddle position on key press
     private void controlPaddle(int keyCode) {
-        if (keyCode == KeyEvent.VK_LEFT) {
+        if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
             paddle.moveLeft();
-        } else if (keyCode == KeyEvent.VK_RIGHT) {
+            System.out.println("Paddle moving left.");
+        } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
             paddle.moveRight();
+            System.out.println("Paddle moving right.");
         }
     }
 

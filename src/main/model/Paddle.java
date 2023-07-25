@@ -1,5 +1,7 @@
 package model;
 
+import ui.BrickBreakApp;
+
 /**
  * Represents the paddle.
  */
@@ -20,13 +22,17 @@ public class Paddle {
     // MODIFIES: this
     // EFFECTS: moves paddle left
     public void moveLeft() {
-        xcoord -= STEP_SIZE;
+        if (xcoord >= SIZE_X / 2) {
+            xcoord -= STEP_SIZE;
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: moves paddle right
     public void moveRight() {
-        xcoord += STEP_SIZE;
+        if (xcoord <= BrickBreakGame.WIDTH - SIZE_X / 2) {
+            xcoord += STEP_SIZE;
+        }
     }
 
     public int getX() {

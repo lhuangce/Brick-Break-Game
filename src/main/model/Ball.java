@@ -82,12 +82,15 @@ public class Ball {
         if (getX() - SIZE / 2 < 0) { // touch left
             xcoord = SIZE / 2;
             dx *= -1;
+            System.out.println("Bounced off wall!");
         } else if (getX() + SIZE / 2 > BrickBreakGame.WIDTH) { // touch right
             xcoord = BrickBreakGame.WIDTH - SIZE / 2;
             dx *= -1;
+            System.out.println("Bounced off wall!");
         } else if (getY() - SIZE / 2 < 0) { // touch top
             ycoord = SIZE / 2;
             dy *= -1;
+            System.out.println("Bounced off wall!");
         }
     }
 
