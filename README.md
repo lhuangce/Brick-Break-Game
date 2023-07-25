@@ -18,3 +18,5 @@ make the game more interesting over time. The design is inspired by the arcade g
 - As a user, I want to be able to pause the game
 - As a user, I want to be able to restart the game
 - As a user, I want to create a specific sized list of bricks at the start of the game
+- As a user, I want to have an option to save my game from the pause menu
+- As a user, I want to have an option to load my save file when starting the game
