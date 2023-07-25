@@ -105,10 +105,10 @@ public class BrickBreakGame {
     // MODIFIES: this
     // EFFECTS: keeps current ball, paddle, and brick states when paused, resumes on key press; exits on key press
     public void gameAction(int keyCode) {
-        if (keyCode == KeyEvent.VK_SPACE || keyCode == KeyEvent.VK_P && !paused) {
+        if (keyCode == KeyEvent.VK_SPACE && !paused) {
             paused = true;
             System.out.println("Game paused");
-        } else if (keyCode == KeyEvent.VK_SPACE || keyCode == KeyEvent.VK_P) {
+        } else if (keyCode == KeyEvent.VK_SPACE) {
             paused = false;
             System.out.println("Game resumed");
         } else {

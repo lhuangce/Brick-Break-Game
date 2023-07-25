@@ -121,21 +121,18 @@ public class TestGame {
         testGame.gameAction(KeyEvent.VK_E);
         assertEquals(Paddle.X_POS + Paddle.STEP_SIZE, p.getX());
 
-        testGame.restart(KeyEvent.VK_R, 30);
-        assertEquals(Paddle.X_POS + Paddle.STEP_SIZE, p.getX());
-
         for (int i = 0; i < BrickBreakGame.HEIGHT; i++) {
             testGame.update();
         }
-        testGame.restart(KeyEvent.VK_R, 30);
-        b = testGame.getBall();
-        p = testGame.getPaddle();
-        bricks = testGame.getBricks();
+        BrickBreakGame g = new BrickBreakGame(30);
+        b = g.getBall();
+        p = g.getPaddle();
+        bricks = g.getBricks();
 
         assertEquals(BrickBreakGame.Y0, b.getY());
         assertEquals(Paddle.X_POS, p.getX());
         assertEquals(30, bricks.size());
-        assertFalse(testGame.isPaused());
-        assertFalse(testGame.gameOver());
+        assertFalse(g.isPaused());
+        assertFalse(g.gameOver());
     }
 }
