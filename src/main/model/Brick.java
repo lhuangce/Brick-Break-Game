@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 /**
  * Represents a brick.
  */
@@ -13,6 +15,13 @@ public class Brick {
     public Brick(int x, int y) {
         xcoord = x;
         ycoord = y;
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("brickX", xcoord);
+        json.put("brickY", ycoord);
+        return json;
     }
 
     public int getX() {

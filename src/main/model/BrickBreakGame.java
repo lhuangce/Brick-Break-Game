@@ -1,14 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Represents the state of a brick break game.
+ * Represents the state of a brick break game. Based on CPSC 210 Lab 3 PaddleBall Project.
  */
 public class BrickBreakGame {
-    public static final long TICKS_PER_SECOND = 10;
     protected static int WIDTH = 800;
     protected static int HEIGHT = 600;
     protected static int Y0 = BrickBreakGame.HEIGHT - 6 * Ball.SIZE;
@@ -24,10 +26,19 @@ public class BrickBreakGame {
     private boolean isGameOver;
 
     // REQUIRES: brickCount is on [1, 30]
-    // EFFECTS: creates new game with ball at position (random x, yStart), given number of bricks in rows of up to 10 in
-    // the top half of the screen, with statuses of game not paused and game not over
+    // EFFECTS: creates new game with ball at position (random x, yStart), given number of bricks placed in rows of up
+    // to 10 in the top half of the screen, with statuses of game not paused and game not over
     public BrickBreakGame(int brickCount) {
         setUp(brickCount);
+    }
+
+    // EFFECTS: creates new empty game for starting from a save state, with statuses of game paused and game not over
+    public BrickBreakGame() {
+        ball = null;
+        paddle = null;
+        bricks = new ArrayList<>();
+        paused = true;
+        isGameOver = false;
     }
 
     // MODIFIES: this
@@ -55,11 +66,29 @@ public class BrickBreakGame {
             if (count < 10) {
                 bricks.add(new Brick(XLOC_0 + Brick.SIZE_X * count, YLOC_0));
             } else if (count < 20) {
-                bricks.add(new Brick(XLOC_0 + Brick.SIZE_X * (count - 10), YLOC_0 * 2));
+                bricks.add(new Brick(XLOC_0 + Brick.SIZE_X * (count - 10), YLOC_0 + Brick.SIZE_Y));
             } else {
-                bricks.add(new Brick(XLOC_0 + Brick.SIZE_X * (count - 20), YLOC_0 * 3));
+                bricks.add(new Brick(XLOC_0 + Brick.SIZE_X * (count - 20), YLOC_0 + 2 * Brick.SIZE_Y));
             }
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds given ball to game
+    public void addBall(Ball b) {
+        ball = b;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds given paddle to game
+    public void addPaddle(Paddle p) {
+        paddle = p;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds given brick to game bricks
+    public void addBrick(Brick brick) {
+        bricks.add(brick);
     }
 
     // MODIFIES: this
@@ -126,6 +155,28 @@ public class BrickBreakGame {
             paddle.moveRight();
             System.out.println("Paddle moving right.");
         }
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("ballX", ball.getX());
+        json.put("ballY", ball.getY());
+        json.put("ballDx", ball.getDx());
+        json.put("ballDy", ball.getDy());
+        json.put("paddleX", paddle.getX());
+        json.put("bricks", bricksToJson());
+        return json;
+    }
+
+    // EFFECTS: returns bricks in this game as a JSON array
+    private JSONArray bricksToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Brick b : bricks) {
+            jsonArray.put(b.toJson());
+        }
+
+        return jsonArray;
     }
 
     public Ball getBall() {

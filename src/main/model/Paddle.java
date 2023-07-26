@@ -1,7 +1,5 @@
 package model;
 
-import ui.BrickBreakApp;
-
 /**
  * Represents the paddle.
  */
@@ -17,6 +15,11 @@ public class Paddle {
     // EFFECTS: creates paddle with position (X_POS, Y_POS)
     public Paddle() {
         this.xcoord = X_POS;
+    }
+
+    // EFFECTS: creates paddle with position (x, Y_POS)
+    public Paddle(int x) {
+        this.xcoord = x;
     }
 
     // MODIFIES: this
@@ -39,7 +42,4 @@ public class Paddle {
         return xcoord;
     }
 
-    public int getyPos() {
-        return Y_POS;
-    }
 }

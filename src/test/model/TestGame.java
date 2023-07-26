@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for BrickBreakGame class
  */
 public class TestGame {
+    // TODO: add tests for new methods
     BrickBreakGame testGame;
     Ball b;
     Paddle p;

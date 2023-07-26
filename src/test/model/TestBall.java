@@ -43,7 +43,7 @@ public class TestBall {
 
     @Test
     void testCollideWithPaddle() {
-        Paddle p = new Paddle();
+        Paddle p = new Paddle(Paddle.X_POS);
 
         Ball b = new Ball(0, 0);
         assertFalse(b.collideWithPaddle(p));

@@ -1,0 +1,8 @@
+{
+    "ballDy": -2,
+    "bricks": [],
+    "ballDx": 2,
+    "ballY": 500,
+    "ballX": 400,
+    "paddleX": 500
+}

@@ -13,7 +13,7 @@ public class TestPaddle {
 
     @BeforeEach
     void runBefore() {
-        testPaddle = new Paddle();
+        testPaddle = new Paddle(Paddle.X_POS);
     }
 
     @Test

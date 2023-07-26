@@ -1,0 +1,21 @@
+{
+  "ballX": 480,
+  "ballY": 500,
+  "ballDx": 2,
+  "ballDy": 2,
+  "paddleX": 510,
+  "bricks": [
+    {
+      "brickX": 40,
+      "brickY": 75
+    },
+    {
+      "brickX": 200,
+      "brickY": 75
+    },
+    {
+      "brickX": 280,
+      "brickY": 75
+    }
+  ]
+}

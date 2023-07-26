@@ -15,12 +15,20 @@ public class Ball {
     private int dx;
     private int dy;
 
-    // EFFECTS: creates ball at position (x, Y0), and x and y speeds of 2
+    // EFFECTS: creates ball at position (x, y), and x and y speeds of 2; DEFAULT CONSTRUCTOR
     public Ball(int x, int y) {
         this.xcoord = x;
         this.ycoord = y;
         dx = 2;
         dy = 2;
+    }
+
+    // EFFECTS: creates ball at position (x, y), moving at speeds dx and dy; for loading save state
+    public Ball(int x, int y, int dx, int dy) {
+        this.xcoord = x;
+        this.ycoord = y;
+        this.dx = dx;
+        this.dy = dy;
     }
 
     // MODIFIES: this
