@@ -13,7 +13,7 @@ public class TestPaddle {
 
     @BeforeEach
     void runBefore() {
-        testPaddle = new Paddle(Paddle.X_POS);
+        testPaddle = new Paddle();
     }
 
     @Test
@@ -37,5 +37,19 @@ public class TestPaddle {
         testPaddle.moveRight();
         testPaddle.moveRight();
         assertEquals(Paddle.X_POS + 3 * Paddle.STEP_SIZE, testPaddle.getX());
+    }
+
+    @Test
+    void testBounds() {
+        Paddle t = new Paddle(Paddle.SIZE_X / 2 + Paddle.STEP_SIZE);
+        t.moveLeft();
+        assertEquals(Paddle.SIZE_X / 2, t.getX());
+        t.moveLeft();
+        assertEquals(Paddle.SIZE_X / 2, t.getX());
+        t = new Paddle(BrickBreakGame.WIDTH - Paddle.SIZE_X / 2 - Paddle.STEP_SIZE);
+        t.moveRight();
+        assertEquals(BrickBreakGame.WIDTH - Paddle.SIZE_X / 2, t.getX());
+        t.moveRight();
+        assertEquals(BrickBreakGame.WIDTH - Paddle.SIZE_X / 2, t.getX());
     }
 }

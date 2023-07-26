@@ -3,10 +3,14 @@ package ui;
 import model.Ball;
 import model.BrickBreakGame;
 import model.exceptions.MaxBricksException;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -14,10 +18,12 @@ import java.util.Scanner;
  */
 
 public class BrickBreakApp {
+    private static final String JSON_STORE = "./data/game.json";
     private BrickBreakGame game;
-    private KeyEvent input;
-    private Scanner scanner;
-    private KeyListener keyHandler;
+    private Scanner input = new Scanner(System.in);
+    private KeyListener keyHandler = new KeyHandler();
+    private JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
+    private JsonReader jsonReader = new JsonReader(JSON_STORE);
 
     // EFFECTS: runs brick break game application
     public BrickBreakApp() throws InterruptedException {
@@ -44,11 +50,13 @@ public class BrickBreakApp {
                 }
             } else {
                 while (game.isPaused()) {
-                    System.out.println("Press 'p' again to resume game, 'q' to quit.");
-                    command = scanner.next();
+                    System.out.println("Press 'p' again to resume game, 's' to save game, 'q' to quit.");
+                    command = input.next();
                     command = command.toLowerCase();
                     if (command.equals("p")) {
-                        game.gameAction(KeyEvent.VK_P);
+                        game.gameAction(KeyEvent.VK_SPACE);
+                    } else if (command.equals("s")) {
+                        saveGame();
                     } else if (command.equals("q")) {
                         keepGoing = false;
                         System.exit(0);
@@ -59,7 +67,7 @@ public class BrickBreakApp {
         System.out.println("Game over! Press 'r' to restart or 'q' to quit");
 
         while (keepGoing) {
-            command = scanner.next();
+            command = input.next();
             command = command.toLowerCase();
             if (command.equals("r")) {
                 keepGoing = false;
@@ -74,29 +82,40 @@ public class BrickBreakApp {
 
     // MODIFIES: this
     // EFFECTS: initializes scanner, input, key handler, and initial game state
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void init() {
-        scanner = new Scanner(System.in);
-        input = null;
-        keyHandler = new KeyHandler();
         boolean keepGoing = true;
+        boolean toLoad = false;
+        String command;
         int brickCount = 0;
 
         while (keepGoing) {
+            System.out.println("Press 'l' to load the saved game, or any other key to start a new game.");
+            command = input.next();
+            command = command.toLowerCase();
+            if (command.equals("l")) {
+                toLoad = true;
+                break;
+            }
             System.out.println("Choose the starting number of bricks (1-30):");
-            brickCount = brickEntry(scanner);
+            brickCount = brickEntry(input);
             if (brickCount != 0) {
                 keepGoing = false;
             }
         }
 
-        game = new BrickBreakGame(brickCount);
-        Ball ball = game.getBall();
+        if (toLoad) {
+            loadGame();
+        } else {
+            game = new BrickBreakGame(brickCount);
+            Ball ball = game.getBall();
 
-        System.out.println("New game with " + brickCount + " bricks.");
-        System.out.println("Ball at (x = " + ball.getX() + ", y = "
-                + ball.getY() + "), moving at (dx = "
-                + ball.getDx() + ", dy = " + ball.getDy() + ").");
-        System.out.println("Paddle at (x = " + game.getPaddle().getX() + ").");
+            System.out.println("New game with " + brickCount + " bricks.");
+            System.out.println("Ball at (x = " + ball.getX() + ", y = "
+                    + ball.getY() + "), moving at (dx = "
+                    + ball.getDx() + ", dy = " + ball.getDy() + ").");
+            System.out.println("Paddle at (x = " + game.getPaddle().getX() + ").");
+        }
     }
 
     // EFFECTS: produces number of bricks to start game with based on user input
@@ -128,7 +147,7 @@ public class BrickBreakApp {
 
         System.out.println("Press 'a' to move the paddle left, 'd' to move right, or 'p' to pause the game.");
 
-        command = scanner.next();
+        command = input.next();
         command = command.toLowerCase();
 
         processCommandTemp(command);
@@ -142,14 +161,36 @@ public class BrickBreakApp {
         } else if (command.equals("d")) {
             game.gameAction(KeyEvent.VK_D);
         } else if (command.equals("p")) {
-            game.gameAction(KeyEvent.VK_P);
+            game.gameAction(KeyEvent.VK_SPACE);
+        }
+    }
+
+    // EFFECTS: saves the game to file
+    private void saveGame() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(game);
+            jsonWriter.close();
+            System.out.println("Saved current game to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads game from file
+    private void loadGame() {
+        try {
+            game = jsonReader.read();
+            System.out.println("Loaded game from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
     private class KeyHandler extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            input = e;
             game.gameAction(e.getKeyCode());
         }
     }

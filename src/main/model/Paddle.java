@@ -25,7 +25,7 @@ public class Paddle {
     // MODIFIES: this
     // EFFECTS: moves paddle left
     public void moveLeft() {
-        if (xcoord >= SIZE_X / 2) {
+        if (xcoord > SIZE_X / 2) {
             xcoord -= STEP_SIZE;
         }
     }
@@ -33,7 +33,7 @@ public class Paddle {
     // MODIFIES: this
     // EFFECTS: moves paddle right
     public void moveRight() {
-        if (xcoord <= BrickBreakGame.WIDTH - SIZE_X / 2) {
+        if (xcoord < BrickBreakGame.WIDTH - SIZE_X / 2) {
             xcoord += STEP_SIZE;
         }
     }
