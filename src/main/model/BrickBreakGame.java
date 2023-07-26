@@ -123,14 +123,6 @@ public class BrickBreakGame {
         }
     }
 
-    /*// MODIFIES: this
-    // EFFECTS: resets game state on key press when game is over, number of bricks based on integer input
-    public void restart(int keyCode, int brickCount) {
-        if (keyCode == KeyEvent.VK_R && isGameOver) {
-            setUp(brickCount);
-        }
-    }*/
-
     // MODIFIES: this
     // EFFECTS: keeps current ball, paddle, and brick states when paused, resumes on key press; exits on key press
     public void gameAction(int keyCode) {
@@ -148,10 +140,10 @@ public class BrickBreakGame {
     // MODIFIES: this
     // EFFECTS: updates paddle position on key press
     private void controlPaddle(int keyCode) {
-        if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
+        if (keyCode == KeyEvent.VK_LEFT) {
             paddle.moveLeft();
             System.out.println("Paddle moving left.");
-        } else if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
+        } else if (keyCode == KeyEvent.VK_RIGHT) {
             paddle.moveRight();
             System.out.println("Paddle moving right.");
         }

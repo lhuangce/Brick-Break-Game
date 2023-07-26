@@ -157,9 +157,9 @@ public class BrickBreakApp {
     // EFFECTS: processes commands from user input (temporary)
     private void processCommandTemp(String command) {
         if (command.equals("a")) {
-            game.gameAction(KeyEvent.VK_A);
+            game.gameAction(KeyEvent.VK_LEFT);
         } else if (command.equals("d")) {
-            game.gameAction(KeyEvent.VK_D);
+            game.gameAction(KeyEvent.VK_RIGHT);
         } else if (command.equals("p")) {
             game.gameAction(KeyEvent.VK_SPACE);
         }
