@@ -7,8 +7,8 @@ import java.awt.*;
  */
 
 public class Ball {
-    protected static int SIZE = 20;
-    //public static final Color COLOR = new Color(255, 150, 28);
+    public static final int SIZE = 20;
+    public static final Color COLOR = new Color(255, 150, 28);
 
     private int xcoord;
     private int ycoord;

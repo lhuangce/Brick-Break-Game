@@ -7,6 +7,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+/**
+ * Represents writer that writes BrickBreakGame to file storing JSON data. Based on JsonSerializationDemo project:
+ * WorkroomApp.
+ */
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;

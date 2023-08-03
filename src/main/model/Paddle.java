@@ -1,13 +1,17 @@
 package model;
 
+import java.awt.*;
+
 /**
  * Represents the paddle.
  */
 public class Paddle {
-    protected static int SIZE_X = 26;
-    protected static int SIZE_Y = 10;
-    protected static int X_POS = BrickBreakGame.WIDTH / 2;
-    protected static int Y_POS = BrickBreakGame.HEIGHT - 40;
+    public static final int SIZE_X = 26;
+    public static final int SIZE_Y = 10;
+    public static final int X_POS = BrickBreakGame.WIDTH / 2;
+    public static final int Y_POS = BrickBreakGame.HEIGHT - 40;
+    public static final Color COLOR = new Color(250, 222, 54);
+
     protected static int STEP_SIZE = 5;
 
     private int xcoord;

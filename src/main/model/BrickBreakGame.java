@@ -11,8 +11,9 @@ import java.util.Random;
  * Represents the state of a brick break game. Based on CPSC 210 Lab 3 PaddleBall Project.
  */
 public class BrickBreakGame {
-    protected static int WIDTH = 800;
-    protected static int HEIGHT = 600;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
+
     protected static int Y0 = BrickBreakGame.HEIGHT - 6 * Ball.SIZE;
 
     private static final Random RND = new Random();
