@@ -25,6 +25,7 @@ public class BrickBreakGame {
     private Ball ball;
     private Paddle paddle;
     private ArrayList<Brick> bricks;
+    private int score;
     private boolean paused;
     private boolean isGameOver;
 
@@ -39,6 +40,7 @@ public class BrickBreakGame {
         ball = null;
         paddle = null;
         bricks = new ArrayList<>();
+        score = 0;
         paused = true;
         isGameOver = false;
     }
@@ -59,6 +61,7 @@ public class BrickBreakGame {
         ball = new Ball(RND.nextInt(WIDTH / 3) + WIDTH / 3, BALL_Y0);
         paddle = new Paddle();
         bricks = new ArrayList<>();
+        score = 0;
         paused = false;
         isGameOver = false;
 
@@ -92,6 +95,12 @@ public class BrickBreakGame {
     }
 
     // MODIFIES: this
+    // EFFECTS: sets score to given score
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    // MODIFIES: this
     // EFFECTS: bounces ball if it collides with an object (paddle or brick), removes brick if hit
     private void checkCollision() {
         if (ball.collideWithPaddle(paddle)) {
@@ -104,9 +113,11 @@ public class BrickBreakGame {
             if (ball.collideWithBrickWidth(current)) {
                 ball.bounceOffHorizontal();
                 bricks.remove(current);
+                score++;
             } else if (ball.collideWithBrickHeight(current)) {
                 ball.bounceOffVertical();
                 bricks.remove(current);
+                score++;
             }
         }
     }
@@ -151,6 +162,7 @@ public class BrickBreakGame {
         json.put("ballDy", ball.getDy());
         json.put("paddleX", paddle.getX());
         json.put("bricks", bricksToJson());
+        json.put("score", score);
         return json;
     }
 
@@ -175,6 +187,10 @@ public class BrickBreakGame {
 
     public ArrayList<Brick> getBricks() {
         return bricks;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public boolean isPaused() {

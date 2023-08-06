@@ -25,6 +25,7 @@ public class BrickBreakFrame extends JFrame {
 
     private BrickBreakGame game;
     private final GamePanel gp;
+    private final ScorePanel sp;
     private final JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
     private final JsonReader jsonReader = new JsonReader(JSON_STORE);
     private Timer timer;
@@ -34,14 +35,18 @@ public class BrickBreakFrame extends JFrame {
     BrickBreakFrame() {
         super("Brick Break Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setUndecorated(true);
+        setUndecorated(false);
         initGame();
         gp = new GamePanel(game);
         add(gp);
+        sp = new ScorePanel(game);
+        add(sp, BorderLayout.NORTH);
         addKeyListener(new KeyHandler());
         pack();
         centreOnScreen();
         setVisible(true);
+        setTitle("Brick Break Game");
+
         addTimer();
     }
 
@@ -93,6 +98,7 @@ public class BrickBreakFrame extends JFrame {
         timer = new Timer(INTERVAL, ae -> {
             game.update();
             gp.repaint();
+            sp.update();
 
             if (game.gameOver()) {
                 timer.stop();

@@ -1,6 +1,7 @@
 {
     "ballDy": -2,
     "bricks": [],
+    "score": 0,
     "ballDx": 2,
     "ballY": 500,
     "ballX": 400,

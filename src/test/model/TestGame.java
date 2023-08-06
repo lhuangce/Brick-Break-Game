@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for BrickBreakGame class
  */
 public class TestGame {
-    // TODO: add tests for new methods
     BrickBreakGame testGame;
     Ball b;
     Paddle p;
@@ -32,6 +31,7 @@ public class TestGame {
         assertEquals(BrickBreakGame.BALL_Y0, b.getY());
         assertEquals(Paddle.X_POS, p.getX());
         assertEquals(10, bricks.size());
+        assertEquals(0, testGame.getScore());
         assertFalse(testGame.isPaused());
         assertFalse(testGame.gameOver());
 
@@ -92,6 +92,7 @@ public class TestGame {
         assertEquals(Ball.defaultDy, g.getBall().getDy());
         assertEquals(0, g.getBricks().size());
         assertFalse(g.getBricks().contains(current));
+        assertEquals(1, g.getScore());
     }
 
     @Test
@@ -106,6 +107,7 @@ public class TestGame {
         assertEquals(Ball.defaultDx, g.getBall().getDx());
         assertEquals(0, g.getBricks().size());
         assertFalse(g.getBricks().contains(current));
+        assertEquals(1, g.getScore());
     }
 
     @Test

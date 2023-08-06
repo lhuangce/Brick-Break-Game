@@ -19,7 +19,6 @@ public class JsonWriterTest extends JsonTest {
     @Test
     void testWriterInvalidFile() {
         try {
-            BrickBreakGame g = new BrickBreakGame();
             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("IOException was expected");
@@ -50,6 +49,7 @@ public class JsonWriterTest extends JsonTest {
             assertEquals(-2, b.getDy());
             assertEquals(500, p.getX());
             assertEquals(0, g.getBricks().size());
+            assertEquals(0, g.getScore());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
@@ -69,6 +69,7 @@ public class JsonWriterTest extends JsonTest {
             g.addBrick(b1);
             g.addBrick(b2);
             g.addBrick(b3);
+            g.setScore(1);
 
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralGame.json");
             writer.open();
@@ -88,6 +89,7 @@ public class JsonWriterTest extends JsonTest {
             checkBrick(40, 75, bricks.get(0));
             checkBrick(200, 75, bricks.get(1));
             checkBrick(280, 75, bricks.get(2));
+            assertEquals(1, g.getScore());
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

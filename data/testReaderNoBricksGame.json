@@ -4,5 +4,6 @@
   "ballDx": 2,
   "ballDy": 2,
   "paddleX": 510,
-  "bricks": []
+  "bricks": [],
+  "score": 0
 }

@@ -20,7 +20,7 @@ public class JsonReaderTest extends JsonTest {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
-            BrickBreakGame g = reader.read();
+            reader.read();
             fail("IOException expected");
         } catch (IOException e) {
             // pass
@@ -41,6 +41,7 @@ public class JsonReaderTest extends JsonTest {
             assertEquals(2, b.getDy());
             assertEquals(510, p.getX());
             assertEquals(0, g.getBricks().size());
+            assertEquals(0, g.getScore());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
@@ -65,6 +66,7 @@ public class JsonReaderTest extends JsonTest {
             checkBrick(40, 75, bricks.get(0));
             checkBrick(200, 75, bricks.get(1));
             checkBrick(280, 75, bricks.get(2));
+            assertEquals(1, g.getScore());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

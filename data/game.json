@@ -42,10 +42,6 @@
             "brickY": 75
         },
         {
-            "brickX": 40,
-            "brickY": 125
-        },
-        {
             "brickX": 120,
             "brickY": 125
         },
@@ -74,15 +70,11 @@
             "brickY": 125
         },
         {
-            "brickX": 680,
-            "brickY": 125
-        },
-        {
             "brickX": 760,
             "brickY": 125
         },
         {
-            "brickX": 120,
+            "brickX": 200,
             "brickY": 175
         },
         {
@@ -94,16 +86,21 @@
             "brickY": 175
         },
         {
+            "brickX": 440,
+            "brickY": 175
+        },
+        {
             "brickX": 520,
             "brickY": 175
         },
         {
-            "brickX": 760,
+            "brickX": 600,
             "brickY": 175
         }
     ],
-    "ballDx": -3,
-    "ballY": 459,
-    "ballX": 694,
-    "paddleX": 778
+    "score": 6,
+    "ballDx": 3,
+    "ballY": 444,
+    "ballX": 436,
+    "paddleX": 316
 }

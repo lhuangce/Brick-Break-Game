@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  */
 
 public class JsonReader {
-    private String source;
+    private final String source;
 
     // EFFECTS: constructs reader to read from source file
     public JsonReader(String source) {
@@ -39,7 +39,7 @@ public class JsonReader {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
-            stream.forEach(s -> contentBuilder.append(s));
+            stream.forEach(contentBuilder::append);
         }
 
         return contentBuilder.toString();
@@ -51,6 +51,7 @@ public class JsonReader {
         addBall(g, jsonObject);
         addPaddle(g, jsonObject);
         addBricks(g, jsonObject);
+        addScore(g, jsonObject);
         return g;
     }
 
@@ -93,5 +94,13 @@ public class JsonReader {
 
         Brick brick = new Brick(xcoord, ycoord);
         g.addBrick(brick);
+    }
+
+    // MODIFIES: g
+    // EFFECTS: gets score from JSON object and adds it to BrickBreakGame
+    private void addScore(BrickBreakGame g, JSONObject jsonObject) {
+        int score = jsonObject.getInt("score");
+
+        g.setScore(score);
     }
 }
