@@ -81,15 +81,50 @@ public class TestGame {
     }
 
     @Test
-    void testBrickHitGameOver() {
-        // test brick hit (horizontal), then game over
-        b.bounceOffHorizontal();
-        for (int n = 0; n < 2 * BrickBreakGame.HEIGHT; n++) {
+    void testBrickHitHorizontal() {
+        BrickBreakGame g = new BrickBreakGame(1);
+        Ball b = new Ball(BrickBreakGame.XLOC_0, BrickBreakGame.YLOC_0 + Brick.SIZE_Y / 2 + Ball.SIZE / 2,
+                -Ball.defaultDx, -Ball.defaultDy);
+        Brick current = g.getBricks().get(0);
+        g.addBall(b);
+
+        g.update();
+        assertEquals(Ball.defaultDy, g.getBall().getDy());
+        assertEquals(0, g.getBricks().size());
+        assertFalse(g.getBricks().contains(current));
+    }
+
+    @Test
+    void testBrickHitVertical() {
+        BrickBreakGame g = new BrickBreakGame(1);
+        Ball b = new Ball(BrickBreakGame.XLOC_0 + Brick.SIZE_X / 2 + Ball.SIZE / 2, BrickBreakGame.YLOC_0,
+                -Ball.defaultDx, -Ball.defaultDy);
+        Brick current = g.getBricks().get(0);
+        g.addBall(b);
+
+        g.update();
+        assertEquals(Ball.defaultDx, g.getBall().getDx());
+        assertEquals(0, g.getBricks().size());
+        assertFalse(g.getBricks().contains(current));
+    }
+
+    @Test
+    void testOutOfBoundsGameOver() {
+        Paddle p = new Paddle(Paddle.SIZE_X);
+        testGame.addPaddle(p);
+        for (int n = 0; n < BrickBreakGame.HEIGHT; n++) {
             testGame.update();
         }
-        assertEquals(Ball.defaultDy, b.getDy());
-        assertEquals(9, bricks.size());
         assertTrue(testGame.gameOver());
+    }
+
+    @Test
+    void testOutOfBricksGameOver() {
+        BrickBreakGame g = new BrickBreakGame();
+        Ball b = new Ball(Ball.SIZE, Ball.SIZE);
+        g.addBall(b);
+        g.checkGameOver();
+        assertTrue(g.gameOver());
     }
 
     @Test
@@ -101,11 +136,20 @@ public class TestGame {
         testGame.gameAction(KeyEvent.VK_RIGHT);
         assertEquals(Paddle.X_POS + Paddle.STEP_SIZE, p.getX());
 
-        testGame.gameAction(KeyEvent.VK_SPACE);
-        assertTrue(testGame.isPaused());
+        try {
+            testGame.gameAction(KeyEvent.VK_SPACE);
+            assertTrue(testGame.isPaused());
+        } catch (GameResumeException e) {
+            fail("Should not have caught exception");
+        }
 
-        testGame.gameAction(KeyEvent.VK_SPACE);
-        assertFalse(testGame.isPaused());
+        try {
+            testGame.gameAction(KeyEvent.VK_SPACE);
+            assertFalse(testGame.isPaused());
+            fail("Did not catch exception");
+        } catch (GameResumeException e) {
+            // expected
+        }
 
         testGame.gameAction(KeyEvent.VK_E);
         assertEquals(Paddle.X_POS + Paddle.STEP_SIZE, p.getX());

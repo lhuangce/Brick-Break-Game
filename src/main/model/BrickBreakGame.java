@@ -18,8 +18,8 @@ public class BrickBreakGame {
     protected static int Y0 = BrickBreakGame.HEIGHT / 2;
 
     private static final Random RND = new Random();
-    private static final int XLOC_0 = Brick.SIZE_X / 2;
-    private static final int YLOC_0 = Brick.SIZE_Y * 3 / 2;
+    protected static final int XLOC_0 = Brick.SIZE_X / 2;
+    protected static final int YLOC_0 = Brick.SIZE_Y * 3 / 2;
 
     private Ball ball;
     private Paddle paddle;
@@ -119,7 +119,7 @@ public class BrickBreakGame {
 
     // MODIFIES: this
     // EFFECTS:  if ball has hit ground or all bricks are cleared, game is marked as over
-    private void checkGameOver() {
+    protected void checkGameOver() {
         if (ball.getY() > HEIGHT || bricks.isEmpty()) {
             isGameOver = true;
         }
