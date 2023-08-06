@@ -124,7 +124,7 @@ public class BrickBreakFrame extends JFrame {
         return brickCount;
     }
 
-    private int checkMaxBricks(String input) throws MaxBricksException, NumberFormatException {
+    private int checkMaxBricks(String input) throws MaxBricksException {
         int brickCount;
         brickCount = parseInt(input);
 
