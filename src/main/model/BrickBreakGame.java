@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.GameResumeException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ public class BrickBreakGame {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
 
-    protected static int Y0 = BrickBreakGame.HEIGHT - 6 * Ball.SIZE;
+    protected static int Y0 = BrickBreakGame.HEIGHT / 2;
 
     private static final Random RND = new Random();
     private static final int XLOC_0 = Brick.SIZE_X / 2;
@@ -46,9 +47,9 @@ public class BrickBreakGame {
     // EFFECTS: updates ball, bricks, and game over status
     public void update() {
         ball.move();
-        System.out.println("Ball at (x = " + ball.getX() + ", y = " + ball.getY() + "), moving at (dx = "
-                  + ball.getDx() + ", dy = " + ball.getDy() + ")");
-        System.out.println("Paddle at (x = " + paddle.getX() + ", y = " + Paddle.Y_POS + ").");
+//        System.out.println("Ball at (x = " + ball.getX() + ", y = " + ball.getY() + "), moving at (dx = "
+//                  + ball.getDx() + ", dy = " + ball.getDy() + ")");
+//        System.out.println("Paddle at (x = " + paddle.getX() + ", y = " + Paddle.Y_POS + ").");
         checkCollision();
         checkGameOver();
     }
@@ -57,7 +58,7 @@ public class BrickBreakGame {
     // MODIFIES: this
     // EFFECTS: creates new ball, sets paddle to default position, resets bricks in position
     private void setUp(int brickCount) {
-        ball = new Ball(RND.nextInt(WIDTH / 2) + WIDTH / 4, Y0);
+        ball = new Ball(RND.nextInt(WIDTH / 3) + WIDTH / 3, Y0);
         paddle = new Paddle();
         bricks = new ArrayList<>();
         paused = false;
@@ -96,9 +97,9 @@ public class BrickBreakGame {
     // EFFECTS: bounces ball if it collides with an object (paddle or brick), removes brick if hit
     private void checkCollision() {
         if (ball.collideWithPaddle(paddle)) {
-            ball.bounceOffHorizontal();
+            ball.bounceOffPaddle();
             ball.move();
-            System.out.println("Bounced off paddle!");
+//            System.out.println("Bounced off paddle!");
         }
 
         for (int i = 0; i < bricks.size(); i++) {
@@ -106,33 +107,34 @@ public class BrickBreakGame {
             if (ball.collideWithBrickWidth(current)) {
                 ball.bounceOffHorizontal();
                 bricks.remove(current);
-                System.out.println("Bounced off brick!");
+//                System.out.println("Bounced off brick!");
             } else if (ball.collideWithBrickHeight(current)) {
                 ball.bounceOffVertical();
                 bricks.remove(current);
-                System.out.println("Bounced off brick!");
+//                System.out.println("Bounced off brick!");
 
             }
         }
     }
 
     // MODIFIES: this
-    // EFFECTS:  if ball has hit ground, game is marked as over
+    // EFFECTS:  if ball has hit ground or all bricks are cleared, game is marked as over
     private void checkGameOver() {
-        if (ball.getY() > HEIGHT) {
+        if (ball.getY() > HEIGHT || bricks.isEmpty()) {
             isGameOver = true;
         }
     }
 
     // MODIFIES: this
     // EFFECTS: keeps current ball, paddle, and brick states when paused, resumes on key press; exits on key press
-    public void gameAction(int keyCode) {
+    public void gameAction(int keyCode) throws GameResumeException {
         if (keyCode == KeyEvent.VK_SPACE && !paused) {
             paused = true;
-            System.out.println("Game paused");
+//            System.out.println("Game paused");
         } else if (keyCode == KeyEvent.VK_SPACE) {
             paused = false;
-            System.out.println("Game resumed");
+//            System.out.println("Game resumed");
+            throw new GameResumeException();
         } else {
             controlPaddle(keyCode);
         }
@@ -143,13 +145,14 @@ public class BrickBreakGame {
     private void controlPaddle(int keyCode) {
         if (keyCode == KeyEvent.VK_LEFT) {
             paddle.moveLeft();
-            System.out.println("Paddle moving left.");
+            //System.out.println("Paddle moving left.");
         } else if (keyCode == KeyEvent.VK_RIGHT) {
             paddle.moveRight();
-            System.out.println("Paddle moving right.");
+            //System.out.println("Paddle moving right.");
         }
     }
 
+    // EFFECTS: saves game data as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("ballX", ball.getX());

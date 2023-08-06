@@ -6,13 +6,13 @@ import java.awt.*;
  * Represents the paddle.
  */
 public class Paddle {
-    public static final int SIZE_X = 26;
+    public static final int SIZE_X = 52;
     public static final int SIZE_Y = 10;
     public static final int X_POS = BrickBreakGame.WIDTH / 2;
     public static final int Y_POS = BrickBreakGame.HEIGHT - 40;
-    public static final Color COLOR = new Color(250, 222, 54);
+    public static final Color COLOR = new Color(50, 50, 255);
 
-    protected static int STEP_SIZE = 5;
+    protected static int STEP_SIZE = 6;
 
     private int xcoord;
 

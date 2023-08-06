@@ -2,12 +2,15 @@ package model;
 
 import org.json.JSONObject;
 
+import java.awt.*;
+
 /**
  * Represents a brick.
  */
 public class Brick {
-    protected static int SIZE_X = 80;
-    protected static int SIZE_Y = 50;
+    public static final Color COLOR = new Color(240, 50, 50);
+    public static final int SIZE_X = 80;
+    public static final int SIZE_Y = 50;
 
     private final int xcoord;
     private final int ycoord;

@@ -1,7 +1,8 @@
 package ui;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
-        new BrickBreakApp();
+    public static void main(String[] args) {
+        //new BrickBreakApp();
+        new BrickBreakFrame();
     }
 }

@@ -12,16 +12,18 @@ import java.awt.*;
 //@SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 
-    private static final String OVER = "Game Over!";
-    private static final String REPLAY = "Press 'r' to restart the game.";
-    private BrickBreakGame game;
+    private static final String OVER = "Game over!";
+    private static final String OVER_OPTIONS = "Press 'r' to restart, or 'q' to quit.";
+    private static final String PAUSE = "Game paused! Press the space bar to resume, 's' to save, or 'q' to quit.";
+
+    private final BrickBreakGame game;
 
     // Constructs a game panel
     // EFFECTS:  sets size and background colour of panel,
     //           updates this with the game to be displayed
     GamePanel(BrickBreakGame g) {
         setPreferredSize(new Dimension(BrickBreakGame.WIDTH, BrickBreakGame.HEIGHT));
-        setBackground(Color.GRAY);
+        setBackground(Color.BLACK);
         this.game = g;
     }
 
@@ -33,6 +35,12 @@ public class GamePanel extends JPanel {
 
         if (game.gameOver()) {
             gameOver(g);
+        } else if (game.getBricks().isEmpty()) {
+            gameOver(g);
+        } else if (game.isPaused()) {
+            pauseMenu(g);
+//        } else {
+//            drawGame(g);
         }
     }
 
@@ -42,11 +50,12 @@ public class GamePanel extends JPanel {
     private void drawGame(Graphics g) {
         drawPaddle(g);
         drawBall(g);
+        drawBricks(g);
     }
 
-    // Draw the tank
+    // Draw the paddle
     // MODIFIES: g
-    // EFFECTS:  draws the tank onto g
+    // EFFECTS:  draws the paddle onto g
     private void drawPaddle(Graphics g) {
         Paddle t = game.getPaddle();
         Color savedCol = g.getColor();
@@ -66,16 +75,45 @@ public class GamePanel extends JPanel {
         g.setColor(savedCol);
     }
 
+    // Draw the bricks
+    // MODIFIES: g
+    // EFFECTS: draws the bricks onto g
+    private void drawBricks(Graphics g) {
+        for (Brick b : game.getBricks()) {
+            drawBrick(g, b);
+        }
+    }
+
+    // Draw a brick
+    // MODIFIES: g
+    // EFFECTS: draws a brick onto g
+    private void drawBrick(Graphics g, Brick b) {
+        Color savedCol = g.getColor();
+        g.setColor(Brick.COLOR);
+        g.fillRect(b.getX() - Brick.SIZE_X / 2, b.getY() - Brick.SIZE_Y / 2, Brick.SIZE_X, Brick.SIZE_Y);
+        g.setColor(savedCol);
+        g.drawRect(b.getX() - Brick.SIZE_X / 2, b.getY() - Brick.SIZE_Y / 2, Brick.SIZE_X, Brick.SIZE_Y);
+    }
+
+    private void pauseMenu(Graphics g) {
+        Color saved = g.getColor();
+        g.setColor(new Color(255, 255, 255));
+        g.setFont(new Font("Arial", 20, 20));
+        FontMetrics fm = g.getFontMetrics();
+        centreString(PAUSE, g, fm, BrickBreakGame.HEIGHT / 2);
+        g.setColor(saved);
+    }
+
     // Draws the "game over" message and replay instructions
     // MODIFIES: g
     // EFFECTS:  draws "game over" and replay instructions onto g
     private void gameOver(Graphics g) {
         Color saved = g.getColor();
-        g.setColor(new Color(0, 0, 0));
+        g.setColor(new Color(255, 255, 255));
         g.setFont(new Font("Arial", 20, 20));
         FontMetrics fm = g.getFontMetrics();
         centreString(OVER, g, fm, BrickBreakGame.HEIGHT / 2);
-        centreString(REPLAY, g, fm, BrickBreakGame.HEIGHT / 2 + 50);
+        centreString(OVER_OPTIONS, g, fm, BrickBreakGame.HEIGHT / 2 + 50);
         g.setColor(saved);
     }
 

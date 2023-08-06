@@ -1,12 +1,12 @@
 package model;
 
+import model.exceptions.GameResumeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import static java.lang.Math.abs;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -74,22 +74,10 @@ public class TestGame {
 
     @Test
     void testPaddleBounce() {
-        int landingX = b.getX() + (Paddle.Y_POS - b.getY()); // ball x plus distance to cover, assuming dx = dy
-        int numMoves = abs(landingX - p.getX()) / Paddle.STEP_SIZE;
-
-        for (int n = 0; n < numMoves; n++) {
-            if (p.getX() < landingX) {
-                p.moveRight();
-            } else {
-                p.moveLeft();
-            }
-        }
-
-        int numUpdates = (BrickBreakGame.HEIGHT - b.getY()) / b.getDy();
-        for (int n = 0; n < numUpdates; n++) {
-            testGame.update();
-        }
-        assertEquals(-2, b.getDy());
+        b = new Ball(BrickBreakGame.WIDTH / 2, Paddle.Y_POS - Ball.SIZE / 2 - Ball.defaultDy + 1, Ball.defaultDx, Ball.defaultDy);
+        testGame.addBall(b);
+        testGame.update();
+        assertEquals(-Ball.defaultDy, b.getDy());
     }
 
     @Test
@@ -99,13 +87,13 @@ public class TestGame {
         for (int n = 0; n < 2 * BrickBreakGame.HEIGHT; n++) {
             testGame.update();
         }
-        assertEquals(2, b.getDy());
+        assertEquals(Ball.defaultDy, b.getDy());
         assertEquals(9, bricks.size());
         assertTrue(testGame.gameOver());
     }
 
     @Test
-    void testKeyEvent() {
+    void testKeyEvent() throws GameResumeException {
         testGame.gameAction(KeyEvent.VK_LEFT);
         assertEquals(Paddle.X_POS - Paddle.STEP_SIZE, p.getX());
 

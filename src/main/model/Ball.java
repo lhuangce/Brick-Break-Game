@@ -10,6 +10,9 @@ public class Ball {
     public static final int SIZE = 20;
     public static final Color COLOR = new Color(255, 150, 28);
 
+    protected static int defaultDx = 3;
+    protected static int defaultDy = 3;
+
     private int xcoord;
     private int ycoord;
     private int dx;
@@ -19,8 +22,8 @@ public class Ball {
     public Ball(int x, int y) {
         this.xcoord = x;
         this.ycoord = y;
-        dx = 2;
-        dy = 2;
+        dx = defaultDx;
+        dy = defaultDy;
     }
 
     // EFFECTS: creates ball at position (x, y), moving at speeds dx and dy; for loading save state
@@ -41,15 +44,24 @@ public class Ball {
     }
 
     // MODIFIES: this
-    // EFFECTS: bounces ball off horizontal surface of object by changing direction of movement
+    // EFFECTS: bounces ball off horizontal surface of paddle by changing direction of movement and
+    public void bounceOffPaddle() {
+        dy = -Math.abs(dy);
+        ycoord += dy;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: bounces ball off horizontal surface of object by changing direction of movement and
     public void bounceOffHorizontal() {
         dy *= -1;
+        ycoord += dy;
     }
 
     // MODIFIES: this
     // EFFECTS: bounces ball off vertical surface of object by changing direction of movement
     public void bounceOffVertical() {
         dx *= -1;
+        xcoord += dx;
     }
 
     // EFFECTS:  returns true if this ball has collided with paddle,
@@ -90,15 +102,15 @@ public class Ball {
         if (getX() - SIZE / 2 < 0) { // touch left
             xcoord = SIZE / 2;
             dx *= -1;
-            System.out.println("Bounced off wall!");
+            //System.out.println("Bounced off wall!");
         } else if (getX() + SIZE / 2 > BrickBreakGame.WIDTH) { // touch right
             xcoord = BrickBreakGame.WIDTH - SIZE / 2;
             dx *= -1;
-            System.out.println("Bounced off wall!");
+            //System.out.println("Bounced off wall!");
         } else if (getY() - SIZE / 2 < 0) { // touch top
             ycoord = SIZE / 2;
             dy *= -1;
-            System.out.println("Bounced off wall!");
+            //System.out.println("Bounced off wall!");
         }
     }
 

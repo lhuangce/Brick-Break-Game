@@ -26,19 +26,19 @@ public class TestBall {
     void testConstructor() {
         assertEquals(testX, testBall.getX());
         assertEquals(Y0, testBall.getY());
-        assertEquals(2, testBall.getDy());
-        assertEquals(2, testBall.getDy());
+        assertEquals(Ball.defaultDx, testBall.getDx());
+        assertEquals(Ball.defaultDy, testBall.getDy());
     }
 
     @Test
     void testMove() {
         testBall.move();
-        assertEquals(testX + 2, testBall.getX());
-        assertEquals(Y0 + 2, testBall.getY());
+        assertEquals(testX + Ball.defaultDx, testBall.getX());
+        assertEquals(Y0 + 3, testBall.getY());
         testBall.move();
         testBall.move();
-        assertEquals(testX + 6, testBall.getX());
-        assertEquals(Y0 + 6, testBall.getY());
+        assertEquals(testX + 3 * Ball.defaultDx, testBall.getX());
+        assertEquals(Y0 + 3 * Ball.defaultDy, testBall.getY());
     }
 
     @Test
@@ -128,61 +128,61 @@ public class TestBall {
 
         b.handleBoundary();
         assertEquals(BrickBreakGame.WIDTH - radius - 1, b.getX());
-        assertEquals(2, b.getDx());
-        assertEquals(2, b.getDy());
+        assertEquals(Ball.defaultDx, b.getDx());
+        assertEquals(Ball.defaultDy, b.getDy());
 
         b = new Ball(BrickBreakGame.WIDTH - radius, Y0);
         b.handleBoundary();
         assertEquals(BrickBreakGame.WIDTH - radius, b.getX());
-        assertEquals(2, b.getDx());
-        assertEquals(2, b.getDy());
+        assertEquals(Ball.defaultDx, b.getDx());
+        assertEquals(Ball.defaultDy, b.getDy());
 
         b = new Ball(BrickBreakGame.WIDTH - radius + 1, Y0);
         b.handleBoundary();
         assertEquals(BrickBreakGame.WIDTH - radius, b.getX());
-        assertEquals(-2, b.getDx());
-        assertEquals(2, b.getDy());
+        assertEquals(-Ball.defaultDx, b.getDx());
+        assertEquals(Ball.defaultDy, b.getDy());
 
-        b = new Ball(Ball.SIZE / 2 + 1, Y0);
+        b = new Ball(Ball.SIZE / 2 + 4, Y0);
         b.bounceOffVertical();
         b.handleBoundary();
         assertEquals(Ball.SIZE / 2 + 1, b.getX());
-        assertEquals(-2, b.getDx());
-        assertEquals(2, b.getDy());
+        assertEquals(-Ball.defaultDx, b.getDx());
+        assertEquals(Ball.defaultDy, b.getDy());
 
-        b = new Ball(Ball.SIZE / 2, Y0);
+        b = new Ball(Ball.SIZE / 2 + 3, Y0);
         b.bounceOffVertical();
         b.handleBoundary();
         assertEquals(Ball.SIZE / 2, b.getX());
-        assertEquals(-2, b.getDx());
-        assertEquals(2, b.getDy());
+        assertEquals(-Ball.defaultDx, b.getDx());
+        assertEquals(Ball.defaultDy, b.getDy());
 
-        b = new Ball(Ball.SIZE / 2 - 1, Y0);
+        b = new Ball(Ball.SIZE / 2 + 2, Y0);
         b.bounceOffVertical();
         b.handleBoundary();
         assertEquals(Ball.SIZE / 2, b.getX());
-        assertEquals(2, b.getDx());
-        assertEquals(2, b.getDy());
+        assertEquals(Ball.defaultDx, b.getDx());
+        assertEquals(Ball.defaultDy, b.getDy());
 
-        b = new Ball(BrickBreakGame.WIDTH / 2, Ball.SIZE / 2 + 1);
+        b = new Ball(BrickBreakGame.WIDTH / 2, Ball.SIZE / 2 + 4);
         b.bounceOffHorizontal();
         b.handleBoundary();
         assertEquals(Ball.SIZE / 2 + 1, b.getY());
-        assertEquals(2, b.getDx());
-        assertEquals(-2, b.getDy());
+        assertEquals(Ball.defaultDx, b.getDx());
+        assertEquals(-Ball.defaultDy, b.getDy());
 
-        b = new Ball(BrickBreakGame.WIDTH / 2, Ball.SIZE / 2);
+        b = new Ball(BrickBreakGame.WIDTH / 2, Ball.SIZE / 2 + 3);
         b.bounceOffHorizontal();
         b.handleBoundary();
         assertEquals(Ball.SIZE / 2, b.getY());
-        assertEquals(2, b.getDx());
-        assertEquals(-2, b.getDy());
+        assertEquals(Ball.defaultDx, b.getDx());
+        assertEquals(-Ball.defaultDy, b.getDy());
 
-        b = new Ball(BrickBreakGame.WIDTH / 2, Ball.SIZE / 2 - 1);
+        b = new Ball(BrickBreakGame.WIDTH / 2, Ball.SIZE / 2 + 2);
         b.bounceOffHorizontal();
         b.handleBoundary();
         assertEquals(Ball.SIZE / 2, b.getY());
-        assertEquals(2, b.getDx());
-        assertEquals(2, b.getDy());
+        assertEquals(Ball.defaultDx, b.getDx());
+        assertEquals(Ball.defaultDy, b.getDy());
     }
 }

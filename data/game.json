@@ -1,5 +1,5 @@
 {
-    "ballDy": 2,
+    "ballDy": -3,
     "bricks": [
         {
             "brickX": 40,
@@ -8,10 +8,30 @@
         {
             "brickX": 120,
             "brickY": 75
+        },
+        {
+            "brickX": 200,
+            "brickY": 75
+        },
+        {
+            "brickX": 280,
+            "brickY": 75
+        },
+        {
+            "brickX": 360,
+            "brickY": 75
+        },
+        {
+            "brickX": 440,
+            "brickY": 75
+        },
+        {
+            "brickX": 600,
+            "brickY": 75
         }
     ],
-    "ballDx": -2,
-    "ballY": 14,
-    "ballX": 500,
-    "paddleX": 540
+    "ballDx": 3,
+    "ballY": 312,
+    "ballX": 130,
+    "paddleX": 130
 }
