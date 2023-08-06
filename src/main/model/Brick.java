@@ -15,11 +15,13 @@ public class Brick {
     private final int xcoord;
     private final int ycoord;
 
+    // EFFECTS: creates brick at position (xcoord, ycoord)
     public Brick(int x, int y) {
         xcoord = x;
         ycoord = y;
     }
 
+    // EFFECTS: saves x and y coordinates to a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("brickX", xcoord);

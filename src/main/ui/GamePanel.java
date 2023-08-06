@@ -9,7 +9,6 @@ import java.awt.*;
 /**
  * The panel in which the game is rendered. Based on CPSC 210 Lab 3 PaddleBall Project.
  */
-//@SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 
     private static final String OVER = "Game over!";
@@ -19,7 +18,7 @@ public class GamePanel extends JPanel {
     private final BrickBreakGame game;
 
     // Constructs a game panel
-    // EFFECTS:  sets size and background colour of panel,
+    // EFFECTS: sets size and background colour of panel,
     //           updates this with the game to be displayed
     GamePanel(BrickBreakGame g) {
         setPreferredSize(new Dimension(BrickBreakGame.WIDTH, BrickBreakGame.HEIGHT));
@@ -27,6 +26,8 @@ public class GamePanel extends JPanel {
         this.game = g;
     }
 
+    // MODIFIES: g
+    // EFFECTS: draws components of game onto g
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -39,8 +40,6 @@ public class GamePanel extends JPanel {
             gameOver(g);
         } else if (game.isPaused()) {
             pauseMenu(g);
-//        } else {
-//            drawGame(g);
         }
     }
 
@@ -95,22 +94,25 @@ public class GamePanel extends JPanel {
         g.drawRect(b.getX() - Brick.SIZE_X / 2, b.getY() - Brick.SIZE_Y / 2, Brick.SIZE_X, Brick.SIZE_Y);
     }
 
+    // Draws the "pause" message
+    // MODIFIES: g
+    // EFFECTS:  draws "pause" onto g
     private void pauseMenu(Graphics g) {
         Color saved = g.getColor();
         g.setColor(new Color(255, 255, 255));
-        g.setFont(new Font("Arial", 20, 20));
+        g.setFont(new Font("Arial", Font.BOLD, 20));
         FontMetrics fm = g.getFontMetrics();
         centreString(PAUSE, g, fm, BrickBreakGame.HEIGHT / 2);
         g.setColor(saved);
     }
 
-    // Draws the "game over" message and replay instructions
+    // Draws the "game over" message and options instructions
     // MODIFIES: g
-    // EFFECTS:  draws "game over" and replay instructions onto g
+    // EFFECTS:  draws "game over" and options instructions onto g
     private void gameOver(Graphics g) {
         Color saved = g.getColor();
         g.setColor(new Color(255, 255, 255));
-        g.setFont(new Font("Arial", 20, 20));
+        g.setFont(new Font("Arial", Font.BOLD, 20));
         FontMetrics fm = g.getFontMetrics();
         centreString(OVER, g, fm, BrickBreakGame.HEIGHT / 2);
         centreString(OVER_OPTIONS, g, fm, BrickBreakGame.HEIGHT / 2 + 50);

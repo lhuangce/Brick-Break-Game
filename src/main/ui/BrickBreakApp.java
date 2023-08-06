@@ -1,6 +1,7 @@
 package ui;
 
 import model.Ball;
+import model.Brick;
 import model.BrickBreakGame;
 import model.exceptions.GameResumeException;
 import model.exceptions.MaxBricksException;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
+ * (NO LONGER IN USE)
  * Begins the game with text representations of game events (based on TellerApp from project stage 1 demo)
  */
 
@@ -54,6 +56,8 @@ public class BrickBreakApp {
         runGame();
     }
 
+    // MODIFIES: this
+    // EFFECTS: helper function to advance the game
     private boolean proceedGame(boolean keepGoing) throws InterruptedException, GameResumeException {
         if (!game.isPaused()) {
             while (true) {
@@ -71,6 +75,8 @@ public class BrickBreakApp {
         return keepGoing;
     }
 
+    // MODIFIES: this
+    // EFFECTS: helper function that handles inputs while game is paused
     private boolean pauseActions(boolean keepGoing) throws GameResumeException {
         String command;
         System.out.println("Press 'p' again to resume game, 's' to save game, 'q' to quit.");
@@ -106,7 +112,7 @@ public class BrickBreakApp {
                 toLoad = true;
                 break;
             }
-            System.out.println("Choose the starting number of bricks (1-30):");
+            System.out.println("Choose the starting number of bricks (1-" + BrickBreakGame.MAX_BRICKS + "):");
             brickCount = brickEntry(input);
             if (brickCount != 0) {
                 keepGoing = false;
@@ -120,6 +126,8 @@ public class BrickBreakApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: helper function instantiating the game
     private void startGame(int brickCount) {
         game = new BrickBreakGame(brickCount);
         Ball ball = game.getBall();
@@ -137,15 +145,16 @@ public class BrickBreakApp {
         try {
             brickCount = checkMaxBricks(s);
         } catch (MaxBricksException e) {
-            System.out.println("Maximum number of bricks cannot exceed 30!");
+            System.out.println("Maximum number of bricks cannot exceed " + BrickBreakGame.MAX_BRICKS + "!");
         }
         return brickCount;
     }
 
+    // EFFECTS: checks if input number of bricks exceeds BrickBreakGame.MAX_BRICKS
     private int checkMaxBricks(Scanner s) throws MaxBricksException {
         int brickCount = s.nextInt();
 
-        if (brickCount > 30) {
+        if (brickCount > BrickBreakGame.MAX_BRICKS) {
             throw new MaxBricksException();
         }
         return brickCount;
@@ -163,12 +172,12 @@ public class BrickBreakApp {
         command = input.next();
         command = command.toLowerCase();
 
-        processCommandTemp(command);
+        processCommandConsole(command);
     }
 
     // MODIFIES: this
-    // EFFECTS: processes commands from user input (temporary)
-    private void processCommandTemp(String command) throws GameResumeException {
+    // EFFECTS: processes commands from user input
+    private void processCommandConsole(String command) throws GameResumeException {
         switch (command) {
             case "a":
                 game.gameAction(KeyEvent.VK_LEFT);

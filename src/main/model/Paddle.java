@@ -16,7 +16,7 @@ public class Paddle {
 
     private int xcoord;
 
-    // EFFECTS: creates paddle with position (X_POS, Y_POS)
+    // EFFECTS: creates paddle with position (X_POS, Y_POS); DEFAULT CONSTRUCTOR
     public Paddle() {
         this.xcoord = X_POS;
     }
@@ -45,5 +45,4 @@ public class Paddle {
     public int getX() {
         return xcoord;
     }
-
 }

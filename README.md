@@ -24,8 +24,9 @@ make the game more interesting over time. The design is inspired by the arcade g
 ## Instructions for Grader
 
 - You can generate the first required action related to adding Xs to a Y by entering the starting number of bricks when
-starting a new game
-- You can generate the second required action related to adding Xs to a Y by...
+starting a new game, creating the list of bricks
+- You can generate the second required action related to adding Xs to a Y by hitting a ball so it contacts then removes
+a brick from the list
 - You can locate my visual component by running the game, either by loading from a save file or starting a new game
 - You can save the state of my application by starting the game, pausing it by pressing the space bar, then pressing 's'
 - You can reload the state of my application by choosing the 'Load from file' option when starting the game

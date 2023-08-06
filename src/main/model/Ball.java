@@ -44,21 +44,21 @@ public class Ball {
     }
 
     // MODIFIES: this
-    // EFFECTS: bounces ball off horizontal surface of paddle by changing direction of movement and
+    // EFFECTS: bounces ball off horizontal surface of paddle by setting direction of vertical movement to upwards
     public void bounceOffPaddle() {
         dy = -Math.abs(dy);
         ycoord += dy;
     }
 
     // MODIFIES: this
-    // EFFECTS: bounces ball off horizontal surface of object by changing direction of movement and
+    // EFFECTS: bounces ball off horizontal surface of object by changing direction of vertical movement
     public void bounceOffHorizontal() {
         dy *= -1;
         ycoord += dy;
     }
 
     // MODIFIES: this
-    // EFFECTS: bounces ball off vertical surface of object by changing direction of movement
+    // EFFECTS: bounces ball off vertical surface of object by changing direction of horizontal movement
     public void bounceOffVertical() {
         dx *= -1;
         xcoord += dx;
@@ -73,7 +73,7 @@ public class Ball {
         return ballBoundingRectangle.intersects(paddleBoundingRectangle);
     }
 
-    // EFFECTS:  returns true if this ball has collided with brick top or bottom
+    // EFFECTS:  returns true if this ball has collided with brick top or bottom,
     //           false otherwise
     public boolean collideWithBrickWidth(Brick b) {
         Rectangle ballBoundingRectangle = new Rectangle(getX() - SIZE / 2, getY() - SIZE / 2, SIZE, SIZE);
@@ -102,15 +102,12 @@ public class Ball {
         if (getX() - SIZE / 2 < 0) { // touch left
             xcoord = SIZE / 2;
             dx *= -1;
-            //System.out.println("Bounced off wall!");
         } else if (getX() + SIZE / 2 > BrickBreakGame.WIDTH) { // touch right
             xcoord = BrickBreakGame.WIDTH - SIZE / 2;
             dx *= -1;
-            //System.out.println("Bounced off wall!");
         } else if (getY() - SIZE / 2 < 0) { // touch top
             ycoord = SIZE / 2;
             dy *= -1;
-            //System.out.println("Bounced off wall!");
         }
     }
 

@@ -29,7 +29,7 @@ public class TestGame {
 
     @Test
     void testConstructor() {
-        assertEquals(BrickBreakGame.Y0, b.getY());
+        assertEquals(BrickBreakGame.BALL_Y0, b.getY());
         assertEquals(Paddle.X_POS, p.getX());
         assertEquals(10, bricks.size());
         assertFalse(testGame.isPaused());
@@ -61,15 +61,15 @@ public class TestGame {
         int x0 = b.getX();
 
         assertEquals(x0, b.getX());
-        assertEquals(BrickBreakGame.Y0, b.getY());
+        assertEquals(BrickBreakGame.BALL_Y0, b.getY());
 
         testGame.update();
         assertEquals(x0 + b.getDx(), b.getX());
-        assertEquals(BrickBreakGame.Y0 + b.getDy(), b.getY());
+        assertEquals(BrickBreakGame.BALL_Y0 + b.getDy(), b.getY());
 
         testGame.update();
         assertEquals(x0 + 2 * b.getDx(), b.getX());
-        assertEquals(BrickBreakGame.Y0 + 2 * b.getDy(), b.getY());
+        assertEquals(BrickBreakGame.BALL_Y0 + 2 * b.getDy(), b.getY());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class TestGame {
     @Test
     void testBrickHitHorizontal() {
         BrickBreakGame g = new BrickBreakGame(1);
-        Ball b = new Ball(BrickBreakGame.XLOC_0, BrickBreakGame.YLOC_0 + Brick.SIZE_Y / 2 + Ball.SIZE / 2,
+        Ball b = new Ball(BrickBreakGame.BRICK_X0, BrickBreakGame.BRICK_Y0 + Brick.SIZE_Y / 2 + Ball.SIZE / 2,
                 -Ball.defaultDx, -Ball.defaultDy);
         Brick current = g.getBricks().get(0);
         g.addBall(b);
@@ -97,7 +97,7 @@ public class TestGame {
     @Test
     void testBrickHitVertical() {
         BrickBreakGame g = new BrickBreakGame(1);
-        Ball b = new Ball(BrickBreakGame.XLOC_0 + Brick.SIZE_X / 2 + Ball.SIZE / 2, BrickBreakGame.YLOC_0,
+        Ball b = new Ball(BrickBreakGame.BRICK_X0 + Brick.SIZE_X / 2 + Ball.SIZE / 2, BrickBreakGame.BRICK_Y0,
                 -Ball.defaultDx, -Ball.defaultDy);
         Brick current = g.getBricks().get(0);
         g.addBall(b);
@@ -162,7 +162,7 @@ public class TestGame {
         p = g.getPaddle();
         bricks = g.getBricks();
 
-        assertEquals(BrickBreakGame.Y0, b.getY());
+        assertEquals(BrickBreakGame.BALL_Y0, b.getY());
         assertEquals(Paddle.X_POS, p.getX());
         assertEquals(30, bricks.size());
         assertFalse(g.isPaused());

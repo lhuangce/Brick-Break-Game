@@ -26,12 +26,84 @@
             "brickY": 75
         },
         {
+            "brickX": 520,
+            "brickY": 75
+        },
+        {
             "brickX": 600,
             "brickY": 75
+        },
+        {
+            "brickX": 680,
+            "brickY": 75
+        },
+        {
+            "brickX": 760,
+            "brickY": 75
+        },
+        {
+            "brickX": 40,
+            "brickY": 125
+        },
+        {
+            "brickX": 120,
+            "brickY": 125
+        },
+        {
+            "brickX": 200,
+            "brickY": 125
+        },
+        {
+            "brickX": 280,
+            "brickY": 125
+        },
+        {
+            "brickX": 360,
+            "brickY": 125
+        },
+        {
+            "brickX": 440,
+            "brickY": 125
+        },
+        {
+            "brickX": 520,
+            "brickY": 125
+        },
+        {
+            "brickX": 600,
+            "brickY": 125
+        },
+        {
+            "brickX": 680,
+            "brickY": 125
+        },
+        {
+            "brickX": 760,
+            "brickY": 125
+        },
+        {
+            "brickX": 120,
+            "brickY": 175
+        },
+        {
+            "brickX": 280,
+            "brickY": 175
+        },
+        {
+            "brickX": 360,
+            "brickY": 175
+        },
+        {
+            "brickX": 520,
+            "brickY": 175
+        },
+        {
+            "brickX": 760,
+            "brickY": 175
         }
     ],
-    "ballDx": 3,
-    "ballY": 312,
-    "ballX": 130,
-    "paddleX": 130
+    "ballDx": -3,
+    "ballY": 459,
+    "ballX": 694,
+    "paddleX": 778
 }

@@ -8,6 +8,9 @@ import static java.lang.Integer.parseInt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+/**
+ * Selected tests for BrickBreakFrame
+ */
 public class TestFrame {
     private int brickCount;
 

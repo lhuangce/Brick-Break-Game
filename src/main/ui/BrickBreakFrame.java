@@ -19,7 +19,6 @@ import static javax.swing.JOptionPane.showMessageDialog;
 /**
  * Represents the main window in which the brick break game is played. Based on CPSC 210 Lab 3 PaddleBall Project.
  */
-//@SuppressWarnings("serial")
 public class BrickBreakFrame extends JFrame {
     private static final int INTERVAL = 20;
     private static final String JSON_STORE = "./data/game.json";
@@ -46,6 +45,8 @@ public class BrickBreakFrame extends JFrame {
         addTimer();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes game by either loading from save file or taking user input
     private void initGame() {
         boolean keepGoing = true;
         int brickCount;
@@ -71,6 +72,8 @@ public class BrickBreakFrame extends JFrame {
         }
     }
 
+    // EFFECTS: produces true if "Load from file" option is selected, false otherwise
+    //          exits application if option dialog is closed
     private boolean toLoad() {
         Object[] options = {"Load from file", "New game"};
         int n = JOptionPane.showOptionDialog(this, "Please choose from the following options:",
@@ -85,8 +88,7 @@ public class BrickBreakFrame extends JFrame {
 
     // Set up timer
     // MODIFIES: none
-    // EFFECTS:  initializes a timer that updates game each
-    //           INTERVAL milliseconds
+    // EFFECTS:  initializes a timer that updates game each INTERVAL milliseconds
     private void addTimer() {
         timer = new Timer(INTERVAL, ae -> {
             game.update();
@@ -98,13 +100,12 @@ public class BrickBreakFrame extends JFrame {
                 timer.stop();
             }
         });
-
         timer.start();
     }
 
     // Centres frame on desktop
     // MODIFIES: this
-    // EFFECTS:  location of frame is set so frame is centred on desktop
+    // EFFECTS:  location of frame is set so frame is centered on desktop
     private void centreOnScreen() {
         Dimension scrn = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((scrn.width - getWidth()) / 2, (scrn.height - getHeight()) / 2);
@@ -124,18 +125,20 @@ public class BrickBreakFrame extends JFrame {
         return brickCount;
     }
 
+    // EFFECTS: checks if input number of bricks exceeds BrickBreakGame.MAX_BRICKS,
+    //          otherwise returns input number as a number
     private int checkMaxBricks(String input) throws MaxBricksException {
         int brickCount;
         brickCount = parseInt(input);
 
-        if (brickCount > 30) {
+        if (brickCount > BrickBreakGame.MAX_BRICKS) {
             throw new MaxBricksException();
         }
         return brickCount;
     }
 
     // MODIFIES: this
-    // EFFECTS: processes commands from user input (buttons, if necessary)
+    // EFFECTS: processes commands from user input
     private void processCommand(int keyCode) throws GameResumeException {
         if (game.gameOver()) {
             if (keyCode == KeyEvent.VK_R) {
@@ -179,6 +182,9 @@ public class BrickBreakFrame extends JFrame {
      * A key handler to respond to key events
      */
     private class KeyHandler extends KeyAdapter {
+
+        // MODIFIES: this
+        // EFFECTS: manages responses to user key press
         @Override
         public void keyPressed(KeyEvent ke) {
             try {

@@ -14,12 +14,13 @@ import java.util.Random;
 public class BrickBreakGame {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
+    public static final int MAX_BRICKS = 30;
 
-    protected static int Y0 = BrickBreakGame.HEIGHT / 2;
+    protected static final int BALL_Y0 = BrickBreakGame.HEIGHT / 2;
+    protected static final int BRICK_X0 = Brick.SIZE_X / 2;
+    protected static final int BRICK_Y0 = Brick.SIZE_Y * 3 / 2;
 
     private static final Random RND = new Random();
-    protected static final int XLOC_0 = Brick.SIZE_X / 2;
-    protected static final int YLOC_0 = Brick.SIZE_Y * 3 / 2;
 
     private Ball ball;
     private Paddle paddle;
@@ -27,14 +28,13 @@ public class BrickBreakGame {
     private boolean paused;
     private boolean isGameOver;
 
-    // REQUIRES: brickCount is on [1, 30]
-    // EFFECTS: creates new game with ball at position (random x, yStart), given number of bricks placed in rows of up
-    // to 10 in the top half of the screen, with statuses of game not paused and game not over
+    // REQUIRES: brickCount is on [1, MAX_BRICKS]
+    // EFFECTS: creates new game in default state with given number of bricks; DEFAULT CONSTRUCTOR
     public BrickBreakGame(int brickCount) {
         setUp(brickCount);
     }
 
-    // EFFECTS: creates new empty game for starting from a save state, with statuses of game paused and game not over
+    // EFFECTS: creates new empty game with statuses of game paused and game not over
     public BrickBreakGame() {
         ball = null;
         paddle = null;
@@ -47,18 +47,16 @@ public class BrickBreakGame {
     // EFFECTS: updates ball, bricks, and game over status
     public void update() {
         ball.move();
-//        System.out.println("Ball at (x = " + ball.getX() + ", y = " + ball.getY() + "), moving at (dx = "
-//                  + ball.getDx() + ", dy = " + ball.getDy() + ")");
-//        System.out.println("Paddle at (x = " + paddle.getX() + ", y = " + Paddle.Y_POS + ").");
         checkCollision();
         checkGameOver();
     }
 
     // Sets default game state with given number of bricks
     // MODIFIES: this
-    // EFFECTS: creates new ball, sets paddle to default position, resets bricks in position
+    // EFFECTS: creates new game with ball at position (random x, yStart), given number of bricks placed in rows of up
+    // to 10 in the top half of the screen, with statuses of game not paused and game not over
     private void setUp(int brickCount) {
-        ball = new Ball(RND.nextInt(WIDTH / 3) + WIDTH / 3, Y0);
+        ball = new Ball(RND.nextInt(WIDTH / 3) + WIDTH / 3, BALL_Y0);
         paddle = new Paddle();
         bricks = new ArrayList<>();
         paused = false;
@@ -66,11 +64,11 @@ public class BrickBreakGame {
 
         for (int count = 0; count < brickCount; count++) {
             if (count < 10) {
-                bricks.add(new Brick(XLOC_0 + Brick.SIZE_X * count, YLOC_0));
+                bricks.add(new Brick(BRICK_X0 + Brick.SIZE_X * count, BRICK_Y0));
             } else if (count < 20) {
-                bricks.add(new Brick(XLOC_0 + Brick.SIZE_X * (count - 10), YLOC_0 + Brick.SIZE_Y));
+                bricks.add(new Brick(BRICK_X0 + Brick.SIZE_X * (count - 10), BRICK_Y0 + Brick.SIZE_Y));
             } else {
-                bricks.add(new Brick(XLOC_0 + Brick.SIZE_X * (count - 20), YLOC_0 + 2 * Brick.SIZE_Y));
+                bricks.add(new Brick(BRICK_X0 + Brick.SIZE_X * (count - 20), BRICK_Y0 + 2 * Brick.SIZE_Y));
             }
         }
     }
@@ -99,7 +97,6 @@ public class BrickBreakGame {
         if (ball.collideWithPaddle(paddle)) {
             ball.bounceOffPaddle();
             ball.move();
-//            System.out.println("Bounced off paddle!");
         }
 
         for (int i = 0; i < bricks.size(); i++) {
@@ -107,18 +104,15 @@ public class BrickBreakGame {
             if (ball.collideWithBrickWidth(current)) {
                 ball.bounceOffHorizontal();
                 bricks.remove(current);
-//                System.out.println("Bounced off brick!");
             } else if (ball.collideWithBrickHeight(current)) {
                 ball.bounceOffVertical();
                 bricks.remove(current);
-//                System.out.println("Bounced off brick!");
-
             }
         }
     }
 
     // MODIFIES: this
-    // EFFECTS:  if ball has hit ground or all bricks are cleared, game is marked as over
+    // EFFECTS: if ball has hit ground or all bricks are cleared, game is marked as over
     protected void checkGameOver() {
         if (ball.getY() > HEIGHT || bricks.isEmpty()) {
             isGameOver = true;
@@ -130,10 +124,8 @@ public class BrickBreakGame {
     public void gameAction(int keyCode) throws GameResumeException {
         if (keyCode == KeyEvent.VK_SPACE && !paused) {
             paused = true;
-//            System.out.println("Game paused");
         } else if (keyCode == KeyEvent.VK_SPACE) {
             paused = false;
-//            System.out.println("Game resumed");
             throw new GameResumeException();
         } else {
             controlPaddle(keyCode);
@@ -145,10 +137,8 @@ public class BrickBreakGame {
     private void controlPaddle(int keyCode) {
         if (keyCode == KeyEvent.VK_LEFT) {
             paddle.moveLeft();
-            //System.out.println("Paddle moving left.");
         } else if (keyCode == KeyEvent.VK_RIGHT) {
             paddle.moveRight();
-            //System.out.println("Paddle moving right.");
         }
     }
 
