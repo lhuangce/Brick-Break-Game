@@ -1,6 +1,8 @@
 package ui;
 
 import model.BrickBreakGame;
+import model.Event;
+import model.EventLog;
 import model.exceptions.GameResumeException;
 import model.exceptions.MaxBricksException;
 import persistence.JsonReader;
@@ -34,7 +36,8 @@ public class BrickBreakFrame extends JFrame {
     // EFFECTS: sets up window in which the paddle ball game will be played
     BrickBreakFrame() {
         super("Brick Break Game");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
         initGame();
         gp = new GamePanel(game);
@@ -42,6 +45,7 @@ public class BrickBreakFrame extends JFrame {
         sp = new ScorePanel(game);
         add(sp, BorderLayout.NORTH);
         addKeyListener(new KeyHandler());
+        addWindowListener(new WindowHandler());
         pack();
         centreOnScreen();
         setVisible(true);
@@ -55,7 +59,6 @@ public class BrickBreakFrame extends JFrame {
     private void initGame() {
         boolean keepGoing = true;
         int brickCount;
-
         boolean load = toLoad();
 
         if (!load) {
@@ -84,6 +87,12 @@ public class BrickBreakFrame extends JFrame {
         int n = JOptionPane.showOptionDialog(this, "Please choose from the following options:",
                 "Start", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 options, options[1]);
+
+//        Runtime.getRuntime().addShutdownHook(new Thread() {
+//            public void run() {
+//                printLog();
+//            }
+//        });
 
         if (n == -1) {
             System.exit(0);
@@ -150,12 +159,14 @@ public class BrickBreakFrame extends JFrame {
             if (keyCode == KeyEvent.VK_R) {
                 new BrickBreakFrame();
             } else if (keyCode == KeyEvent.VK_Q) {
-                System.exit(0);
+                this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+//                System.exit(0);
             }
         } else if (keyCode == KeyEvent.VK_S && game.isPaused()) {
             saveGame();
         } else if (keyCode == KeyEvent.VK_Q && game.isPaused()) {
-            System.exit(0);
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+//            System.exit(0);
         } else {
             game.gameAction(keyCode);
         }
@@ -184,6 +195,15 @@ public class BrickBreakFrame extends JFrame {
         }
     }
 
+    // EFFECTS: prints event log when user quits application
+    public void printLog() {
+        EventLog el = EventLog.getInstance();
+        for (Event e : el) {
+            System.out.println(e.getDate() + ": " + e.getDescription());
+        }
+        Runtime.getRuntime().halt(0);
+    }
+
     /**
      * A key handler to respond to key events
      */
@@ -198,6 +218,18 @@ public class BrickBreakFrame extends JFrame {
             } catch (GameResumeException e) {
                 timer.restart();
             }
+        }
+    }
+
+    /**
+     * A window listener for receiving window events
+     */
+    private class WindowHandler extends WindowAdapter {
+
+        // EFFECTS: prints event log when user quits application
+        @Override
+        public void windowClosing(WindowEvent we) {
+            printLog();
         }
     }
 }

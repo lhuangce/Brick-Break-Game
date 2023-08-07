@@ -68,10 +68,13 @@ public class BrickBreakGame {
         for (int count = 0; count < brickCount; count++) {
             if (count < 10) {
                 bricks.add(new Brick(BRICK_X0 + Brick.SIZE_X * count, BRICK_Y0));
+                EventLog.getInstance().logEvent(new Event("Brick added to list."));
             } else if (count < 20) {
                 bricks.add(new Brick(BRICK_X0 + Brick.SIZE_X * (count - 10), BRICK_Y0 + Brick.SIZE_Y));
+                EventLog.getInstance().logEvent(new Event("Brick added to list."));
             } else {
                 bricks.add(new Brick(BRICK_X0 + Brick.SIZE_X * (count - 20), BRICK_Y0 + 2 * Brick.SIZE_Y));
+                EventLog.getInstance().logEvent(new Event("Brick added to list."));
             }
         }
     }
@@ -113,10 +116,12 @@ public class BrickBreakGame {
             if (ball.collideWithBrickWidth(current)) {
                 ball.bounceOffHorizontal();
                 bricks.remove(current);
+                EventLog.getInstance().logEvent(new Event("Brick removed from list."));
                 score++;
             } else if (ball.collideWithBrickHeight(current)) {
                 ball.bounceOffVertical();
                 bricks.remove(current);
+                EventLog.getInstance().logEvent(new Event("Brick removed from list."));
                 score++;
             }
         }

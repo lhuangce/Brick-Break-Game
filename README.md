@@ -31,3 +31,24 @@ a brick from the list.
 - You can save the state of my application by starting the game, pausing it by pressing the space bar, and then pressing
 's'.
 - You can reload the state of my application by choosing the 'Load from file' option when starting the game.
+
+## Phase 4: Task 2
+Mon Aug 07 01:16:33 PDT 2023: Brick added to list.
+Mon Aug 07 01:16:33 PDT 2023: Brick added to list.
+Mon Aug 07 01:16:33 PDT 2023: Brick added to list.
+Mon Aug 07 01:16:33 PDT 2023: Brick added to list.
+Mon Aug 07 01:16:33 PDT 2023: Brick added to list.
+Mon Aug 07 01:16:33 PDT 2023: Brick added to list.
+Mon Aug 07 01:16:33 PDT 2023: Brick added to list.
+Mon Aug 07 01:16:33 PDT 2023: Brick added to list.
+Mon Aug 07 01:16:33 PDT 2023: Brick added to list.
+Mon Aug 07 01:16:33 PDT 2023: Brick added to list.
+Mon Aug 07 01:16:40 PDT 2023: Brick removed from list.
+Mon Aug 07 01:16:50 PDT 2023: Brick removed from list.
+Mon Aug 07 01:16:59 PDT 2023: Brick removed from list.
+Mon Aug 07 01:17:08 PDT 2023: Brick removed from list.
+Mon Aug 07 01:17:17 PDT 2023: Brick removed from list.
+Mon Aug 07 01:17:26 PDT 2023: Brick removed from list.
+Mon Aug 07 01:17:35 PDT 2023: Brick removed from list.
+
+- Note: event log does not print if start menu of game is closed
