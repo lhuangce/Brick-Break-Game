@@ -21,7 +21,7 @@ public class EventLog implements Iterable<Event> {
 	 */
     private EventLog() {
         events = new ArrayList<>();
-	}
+    }
 	
 	/**
 	 * Gets instance of EventLog - creates it
@@ -56,5 +56,5 @@ public class EventLog implements Iterable<Event> {
     @Override
 	public Iterator<Event> iterator() {
         return events.iterator();
-	}
+    }
 }
