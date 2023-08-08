@@ -3,7 +3,7 @@ package model;
 import java.awt.*;
 
 /**
- * Represents a ball; code based on PaddleBall lab example
+ * Represents a ball; code based on CPSC 210 Lab 3 PaddleBall Project.
  */
 
 public class Ball {
