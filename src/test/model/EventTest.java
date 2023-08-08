@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the Event class
@@ -15,10 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class EventTest {
     private Event e;
     private Date d;
-
-    //NOTE: these tests might fail if time at which line (2) below is executed
-    //is different from time that line (1) is executed.  Lines (1) and (2) must
-    //run in same millisecond for this test to make sense and pass.
 
     @BeforeEach
     public void runBefore() {
@@ -31,6 +26,25 @@ public class EventTest {
         assertEquals("Brick added to list", e.getDescription());
         assertTrue(d.getTime() >= e.getDate().getTime() - 50
         && d.getTime() <= e.getDate().getTime() + 50);
+    }
+
+    @Test
+    public void testEquals() {
+
+    }
+
+    @Test
+    public void testEqualsHashCode() {
+        Event other = new Event("test");
+        Event another = new Event("test");
+
+        assertNotEquals(e, other);
+        assertEquals(other, another);
+
+        assertNotEquals(e.hashCode(), other.hashCode());
+        assertEquals(other.hashCode(), another.hashCode());
+
+
     }
 
     @Test
