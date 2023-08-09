@@ -232,4 +232,5 @@ public class BrickBreakFrame extends JFrame {
             printLog();
         }
     }
+
 }
