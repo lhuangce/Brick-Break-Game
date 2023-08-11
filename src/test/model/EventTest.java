@@ -34,13 +34,11 @@ public class EventTest {
         Event other = new Event("test");
         Event another = new Event("test");
 
-        assertFalse(other.equals(null));
-        assertFalse(other.equals("object"));
+        assertNotEquals(null, other);
+        assertNotEquals("object", other);
 
-        assertFalse(e.equals(other));
-//        assertNotEquals(e, other);
-        assertTrue(other.equals(another));
-//        assertEquals(other, another);
+        assertNotEquals(e, other);
+        assertEquals(other, another);
 
         assertNotEquals(e.hashCode(), other.hashCode());
         assertEquals(other.hashCode(), another.hashCode());
