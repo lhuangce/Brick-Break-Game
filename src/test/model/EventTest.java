@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for the Event class. Based on CPSC 210 AlarmSystem project
  * (<a href="https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git">link</a>).
  */
+@SuppressWarnings("ALL")
 public class EventTest {
     private Event e;
     private Date d;
@@ -34,11 +35,11 @@ public class EventTest {
         Event other = new Event("test");
         Event another = new Event("test");
 
-        assertNotEquals(null, other);
-        assertNotEquals("object", other);
+        assertFalse(other.equals(null));
+        assertFalse(other.equals("object"));
 
-        assertNotEquals(e, other);
-        assertEquals(other, another);
+        assertFalse(e.equals(other));
+        assertTrue(other.equals(another));
 
         assertNotEquals(e.hashCode(), other.hashCode());
         assertEquals(other.hashCode(), another.hashCode());
