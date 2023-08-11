@@ -9,7 +9,8 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Unit tests for the Event class
+ * Unit tests for the Event class. Based on CPSC 210 AlarmSystem project
+ * (<a href="https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git">link</a>).
  */
 public class EventTest {
     private Event e;
@@ -26,11 +27,6 @@ public class EventTest {
         assertEquals("Brick added to list", e.getDescription());
         assertTrue(d.getTime() >= e.getDate().getTime() - 50
         && d.getTime() <= e.getDate().getTime() + 50);
-    }
-
-    @Test
-    public void testEquals() {
-
     }
 
     @Test

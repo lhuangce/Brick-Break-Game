@@ -19,7 +19,8 @@ import static javax.swing.JOptionPane.showInputDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
- * Represents the main window in which the brick break game is played. Based on CPSC 210 Lab 3 PaddleBall Project.
+ * Represents the main window in which the brick break game is played. Based on CPSC 210 Lab 3 PaddleBall Project
+ * (<a href="https://github.students.cs.ubc.ca/CPSC210/PaddleBall">link</a>).
  */
 public class BrickBreakFrame extends JFrame {
     private static final int INTERVAL = 20;
@@ -88,12 +89,6 @@ public class BrickBreakFrame extends JFrame {
                 "Start", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 options, options[1]);
 
-//        Runtime.getRuntime().addShutdownHook(new Thread() {
-//            public void run() {
-//                printLog();
-//            }
-//        });
-
         if (n == -1) {
             System.exit(0);
         }
@@ -160,13 +155,11 @@ public class BrickBreakFrame extends JFrame {
                 new BrickBreakFrame();
             } else if (keyCode == KeyEvent.VK_Q) {
                 this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-//                System.exit(0);
             }
         } else if (keyCode == KeyEvent.VK_S && game.isPaused()) {
             saveGame();
         } else if (keyCode == KeyEvent.VK_Q && game.isPaused()) {
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-//            System.exit(0);
         } else {
             game.gameAction(keyCode);
         }
@@ -232,5 +225,4 @@ public class BrickBreakFrame extends JFrame {
             printLog();
         }
     }
-
 }

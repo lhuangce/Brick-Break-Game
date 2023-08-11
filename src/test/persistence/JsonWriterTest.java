@@ -13,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
- * Unit tests for JsonWriter class. Based on JsonSerializationDemo project: WorkroomApp.
+ * Unit tests for JsonWriter class. Based on JsonSerializationDemo project: WorkroomApp
+ * (<a href="https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git">link</a>).
  */
 public class JsonWriterTest extends JsonTest {
     @Test
@@ -64,11 +65,13 @@ public class JsonWriterTest extends JsonTest {
             Brick b1 = new Brick(40, 75);
             Brick b2 = new Brick(200, 75);
             Brick b3 = new Brick(280, 75);
+            Brick b4 = new Brick(40, 125);
             g.addBall(b);
             g.addPaddle(p);
             g.addBrick(b1);
             g.addBrick(b2);
             g.addBrick(b3);
+            g.addBrick(b4);
             g.setScore(1);
 
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralGame.json");
@@ -85,10 +88,11 @@ public class JsonWriterTest extends JsonTest {
             assertEquals(500, p.getX());
 
             ArrayList<Brick> bricks = g.getBricks();
-            assertEquals(3, bricks.size());
+            assertEquals(4, bricks.size());
             checkBrick(40, 75, bricks.get(0));
             checkBrick(200, 75, bricks.get(1));
             checkBrick(280, 75, bricks.get(2));
+            checkBrick(40, 125, bricks.get(3));
             assertEquals(1, g.getScore());
 
         } catch (IOException e) {

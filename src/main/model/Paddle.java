@@ -12,7 +12,7 @@ public class Paddle {
     public static final int Y_POS = BrickBreakGame.HEIGHT - 40;
     public static final Color COLOR = new Color(50, 50, 255);
 
-    protected static int STEP_SIZE = 6;
+    protected static final int STEP_SIZE = 6;
 
     private int xcoord;
 

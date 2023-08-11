@@ -7,6 +7,7 @@ import java.awt.*;
 
 /**
  * Represents the panel in which the scoreboard is displayed. From CPSC 210 SpaceInvadersBase
+ * (<a href="https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase">link</a>).
  */
 public class ScorePanel extends JPanel {
     private static final String SCORE_TXT = "Score: ";

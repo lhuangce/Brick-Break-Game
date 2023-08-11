@@ -1,13 +1,13 @@
 package ui;
 
 import model.*;
-import model.BrickBreakGame;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * The panel in which the game is rendered. Based on CPSC 210 Lab 3 PaddleBall Project.
+ * The panel in which the game is rendered. Based on CPSC 210 Lab 3 PaddleBall Project
+ * (<a href="https://github.students.cs.ubc.ca/CPSC210/PaddleBall">link</a>).
  */
 public class GamePanel extends JPanel {
 

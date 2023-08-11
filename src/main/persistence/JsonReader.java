@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 /**
  * Represents reader that reads BrickBreakGame from file storing JSON data. Based on JsonSerializationDemo project:
- * WorkroomApp.
+ * WorkroomApp (<a href="https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git">link</a>).
  */
 
 public class JsonReader {

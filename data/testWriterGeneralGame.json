@@ -12,6 +12,10 @@
         {
             "brickX": 280,
             "brickY": 75
+        },
+        {
+            "brickX": 40,
+            "brickY": 125
         }
     ],
     "score": 1,

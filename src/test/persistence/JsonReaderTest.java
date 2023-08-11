@@ -13,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
- * Unit tests for JsonReader class. Based on JsonSerializationDemo project: WorkroomApp.
+ * Unit tests for JsonReader class. Based on JsonSerializationDemo project: WorkroomApp
+ * (<a href="https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git">link</a>).
  */
 public class JsonReaderTest extends JsonTest {
     @Test

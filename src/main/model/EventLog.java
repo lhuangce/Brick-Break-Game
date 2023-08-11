@@ -8,7 +8,8 @@ import java.util.Iterator;
  * Represents a log of brick break game events.
  * We use the Singleton Design Pattern to ensure that there is only
  * one EventLog in the system and that the system has global access
- * to the single instance of the EventLog.
+ * to the single instance of the EventLog. From CPSC 210 AlarmSystem Project
+ * (<a href="https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git">link</a>).
  */
 public class EventLog implements Iterable<Event> {
 	/** the only EventLog in the system (Singleton Design Pattern) */

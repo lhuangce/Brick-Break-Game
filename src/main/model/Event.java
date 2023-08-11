@@ -13,10 +13,11 @@ public class Event {
     private final String description;
 	
 	/**
-	 * Creates an event with the given description
-	 * and the current date/time stamp.
-	 * @param description  a description of the event
-	 */
+     * Creates an event with the given description
+     * and the current date/time stamp. From CPSC 210 AlarmSystem Project
+     * (<a href="https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git">link</a>).
+     * @param description  a description of the event
+     */
     public Event(String description) {
         dateLogged = Calendar.getInstance().getTime();
         this.description = description;

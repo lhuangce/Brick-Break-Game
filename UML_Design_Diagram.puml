@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Ball
+class Brick
+class BrickBreakGame
+class Paddle
+
+class Event
+class EventLog
+
+class JsonReader
+class JsonWriter
+
+class BrickBreakFrame
+class GamePanel
+class ScorePanel
+class Main
+
+BrickBreakFrame --> BrickBreakGame
+BrickBreakFrame o--> GamePanel
+BrickBreakFrame o--> ScorePanel
+BrickBreakFrame --> JsonReader
+BrickBreakFrame --> JsonWriter
+GamePanel --> BrickBreakGame
+ScorePanel --> BrickBreakGame
+
+BrickBreakGame --> "0..1" Ball
+BrickBreakGame --> "0..1" Paddle
+BrickBreakGame --> "0..30" Brick
+
+EventLog o--> "0..*" Event
+EventLog --> EventLog
+
+@enduml

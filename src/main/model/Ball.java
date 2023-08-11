@@ -3,15 +3,16 @@ package model;
 import java.awt.*;
 
 /**
- * Represents a ball; code based on CPSC 210 Lab 3 PaddleBall Project.
+ * Represents a ball; code based on CPSC 210 Lab 3 PaddleBall Project
+ * (<a href="https://github.students.cs.ubc.ca/CPSC210/PaddleBall">link</a>).
  */
 
 public class Ball {
     public static final int SIZE = 20;
     public static final Color COLOR = new Color(255, 150, 28);
 
-    protected static int defaultDx = 3;
-    protected static int defaultDy = 3;
+    protected static final int defaultDx = 3;
+    protected static final int defaultDy = 3;
 
     private int xcoord;
     private int ycoord;

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Represents the state of a brick break game. Based on CPSC 210 Lab 3 PaddleBall Project.
+ * Represents the state of a brick break game. Based on CPSC 210 Lab 3 PaddleBall Project
+ * (<a href="https://github.students.cs.ubc.ca/CPSC210/PaddleBall">link</a>).
  */
 public class BrickBreakGame {
     public static final int WIDTH = 800;
@@ -136,7 +137,7 @@ public class BrickBreakGame {
     }
 
     // MODIFIES: this
-    // EFFECTS: keeps current ball, paddle, and brick states when paused, resumes on key press; exits on key press
+    // EFFECTS: handles in-game actions of pause, resume, and paddle control on key press
     public void gameAction(int keyCode) throws GameResumeException {
         if (keyCode == KeyEvent.VK_SPACE && !paused) {
             paused = true;

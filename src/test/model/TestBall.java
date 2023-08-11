@@ -11,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestBall {
     Ball testBall;
-    int testX = BrickBreakGame.WIDTH / 2;
-    int Y0 = BrickBreakGame.HEIGHT - 5 * Ball.SIZE;
-    int thicknessX = Brick.SIZE_X / 2;
-    int thicknessY = Brick.SIZE_Y / 2;
-    int radius = Ball.SIZE / 2;
+    final int testX = BrickBreakGame.WIDTH / 2;
+    final int Y0 = BrickBreakGame.HEIGHT - 5 * Ball.SIZE;
+    final int thicknessX = Brick.SIZE_X / 2;
+    final int thicknessY = Brick.SIZE_Y / 2;
+    final int radius = Ball.SIZE / 2;
 
     @BeforeEach
     void runBefore() {
