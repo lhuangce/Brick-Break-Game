@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit tests for the Event class. Based on CPSC 210 AlarmSystem project
  * (<a href="https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git">link</a>).
  */
-@SuppressWarnings("ALL")
 public class EventTest {
     private Event e;
     private Date d;
